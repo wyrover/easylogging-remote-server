@@ -11,6 +11,6 @@ int main(int argc, char *argv[])
     QApplication qapp(argc, argv);
     el::Helpers::setArgs(argc, argv);
     Credentials credentials(argc, argv);
-    LOG_IF(credentials.users().size() > 0, INFO) << "Credentials [" << credentials << "] All users: " << credentials.users();
+    LOG_IF(credentials.users().size() > 0, INFO) << "Credentials [" << credentials << "]";
     return 0;//qapp.exec();
 }

@@ -53,7 +53,7 @@ bool Credentials::checkCredentials(const std::string& username, const std::strin
 void Credentials::log(std::ostream& os) const
 {
     os << m_users.size() << " Users; ";
-    os << "Pass key: [" << (m_valid ? "" : "not ") << "verified]";
+    os << "Pass key: [" << (m_valid ? "" : "not ") << "verified] ";
 }
 
 void Credentials::parseUsers(const char* usersStr)
