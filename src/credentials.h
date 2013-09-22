@@ -4,24 +4,38 @@
 #include <string>
 #include <unordered_map>
 #include "easylogging++.h"
+#include "request_type.h"
+
+enum class CredentialsType : unsigned short {
+    All = 0,
+    WriteLogs = 1,
+    NewLogger = 2,
+    ConfigurationUpdate = 3,
+    Unknown = 1010
+};
+
 /**
  * @brief Responsible for server credentials
  */
 class Credentials : public el::Loggable
 {
 public:
+    typedef std::string UsersHashMapKey;
+    typedef std::pair<std::string, CredentialsType> UsersHashMapValue;
+    typedef std::unordered_map<UsersHashMapKey, UsersHashMapValue> UsersHashMap;
+
     static const char* kUsersParam;
     static const char* kPassKeyParam;
 
     Credentials(int argc, char *argv[]);
 
-    inline const std::unordered_map<std::string, std::string>& users(void) { return m_users; }
+    inline const UsersHashMap& users(void) { return m_users; }
     inline int passKey(void) { return m_passKey; }
     inline bool valid(void) { return m_valid; }
     bool checkCredentials(const std::string& username, const std::string& password) const;
     virtual void log(std::ostream &) const;
 private:
-    std::unordered_map<std::string, std::string> m_users;
+    UsersHashMap m_users;
     int m_passKey;
     bool m_valid;
 

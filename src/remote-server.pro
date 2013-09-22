@@ -25,10 +25,12 @@ QMAKE_CXX = g++
 QMAKE_LINK = g++
 
 SOURCES += main.cpp \
-    credentials.cpp
+    credentials.cpp \
+    request_type.cpp
 
 HEADERS  += \
     easylogging++.h \
-    credentials.h
+    credentials.h \
+    request_type.h
 
 FORMS    +=

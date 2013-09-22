@@ -20,7 +20,7 @@ Credentials::Credentials(int argc, char *argv[])
     }
 #ifdef SERVER_REQUIRES_PERMISSION
 #   ifndef SERVER_PASSKEY
-#      error "Please provide c-string based SERVER_PASSKEY macro with value in order to user permissions"
+#      error "Please define integer based SERVER_PASSKEY macro with value in order to user permissions"
 #   else
     // If we have server passkey, our credentials are only valid when the passkey matches
     m_valid = SERVER_PASSKEY == m_passKey;
@@ -37,9 +37,9 @@ bool Credentials::checkCredentials(const std::string& username, const std::strin
     if (!m_valid)
         return false;
 #ifdef SERVER_REQUIRES_PERMISSION
-    std::unordered_map<std::string, std::string>::const_iterator it = m_users.find(username);
+    UsersHashMap::const_iterator it = m_users.find(username);
     if (it != m_users.end()) {
-        return it->second == password;
+        return it->second.first == password;
     }
     return false;
 #else
@@ -53,7 +53,7 @@ bool Credentials::checkCredentials(const std::string& username, const std::strin
 void Credentials::log(std::ostream& os) const
 {
     os << m_users.size() << " Users; ";
-    os << "Pass key: [" << (m_valid ? "" : "not ") << "verified] ";
+    os << "Pass key: [" << (m_valid ? "" : "not ") << "verified]";
 }
 
 void Credentials::parseUsers(const char* usersStr)
@@ -81,7 +81,7 @@ void Credentials::parseUsers(const char* usersStr)
         case ',':
         case ']':
             // Store and continue
-            m_users.insert(std::pair<std::string, std::string>(username.str(), password.str()));
+            m_users.insert(std::pair<UsersHashMapKey, UsersHashMapValue>(username.str(), UsersHashMapValue(password.str(), CredentialsType::All)));
             username.str("");
             password.str("");
             isUsername = true;
