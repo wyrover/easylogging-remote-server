@@ -1,4 +1,6 @@
-easylogging-remote-server
-=========================
+Easylogging++ Remote Server
+===========================
 
-Configure and log using Easylogging++ and TCP sockets
+Deamon tool that runs in the background and listens to TCP connection to configure loggers, register new loggers and write log using one of these loggers remotely.
+
+This is currently being developed.
