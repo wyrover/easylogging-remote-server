@@ -25,7 +25,7 @@ void configureLoggersFromArgs(int argc, char *argv[])
    for (int i = 1; i < argc; ++i) {
         if (i != argc - 1) {
             if (strcmp(argv[i], kGlobalConfigurationsFileParam) == 0) {
-                LOG(INFO) << "Configuring loggers using configurations from [" << argv[i + 1] << "]";
+                VLOG(3) << "Configuring loggers using configurations from [" << argv[i + 1] << "]";
                 el::Loggers::configureFromGlobal(argv[i + 1]);
             }
         }
