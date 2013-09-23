@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = remote-server
 TEMPLATE = app
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++0x
 
 DEFINES += _ELPP_QT_LOGGING \
      _ELPP_STL_LOGGING \
@@ -20,9 +20,9 @@ DEFINES += _ELPP_QT_LOGGING \
      SERVER_REQUIRES_PERMISSION \
      SERVER_PASSKEY=123
 
-QMAKE_CC = g++
-QMAKE_CXX = g++
-QMAKE_LINK = g++
+QMAKE_CC = icpc
+QMAKE_CXX = icpc
+QMAKE_LINK = icpc
 
 SOURCES += main.cpp \
     credentials.cpp \
