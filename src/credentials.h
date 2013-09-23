@@ -42,7 +42,7 @@ private:
 
     ///
     /// @brief parseUsers Parses usernames/password and stores into m_users hashmap
-    /// @param usersStr Taken from param kUsersParam, format is something like: [me:mypass,john:pass1]
+    /// @param usersStr Taken from param kUsersParam, format is something like: [me:mypass=2,john:pass1=1]
     ///
     void parseUsers(const char* usersStr);
 };

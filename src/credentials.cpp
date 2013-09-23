@@ -82,6 +82,7 @@ void Credentials::parseUsers(const char* usersStr)
         case '[':
             username.str("");
             password.str("");
+            permissions.str("");
             isUsername = true;
             isPassword = false;
             isPermissions = false;
@@ -91,6 +92,7 @@ void Credentials::parseUsers(const char* usersStr)
             isUsername = false;
             isPermissions = false;
             password.str("");
+            permissions.str("");
             break;
         case '=':
             isPassword = false;
@@ -101,6 +103,7 @@ void Credentials::parseUsers(const char* usersStr)
         case ',':
         case ']':
             // Store and continue
+            if (permissions.str().empty()) permissions << "0";
             VLOG(3) << "Creating permissions for [" << username.str() << "] = [" << permissions.str() << "]";
             m_users.insert(std::pair<UsersHashMapKey, UsersHashMapValue>(username.str(), UsersHashMapValue(password.str(), atoi(permissions.str().c_str()))));
             username.str("");
