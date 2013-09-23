@@ -24,7 +24,7 @@ Credentials::Credentials(int argc, char *argv[])
 #   else
     // If we have server passkey, our credentials are only valid when the passkey matches
     m_valid = SERVER_PASSKEY == m_passKey;
-    LOG_IF(!m_valid, WARNING) << "Server pass key not verified successfully!";
+    CHECK(m_valid) << "Server pass key not verified successfully!";
 #   endif // SERVER_PASSKEY
 #else
     // Always valid

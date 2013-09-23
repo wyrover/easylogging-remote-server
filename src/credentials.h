@@ -7,16 +7,17 @@
 #include "request_type.h"
 
 enum class CredentialsType : unsigned short {
-    All = 0,
-    WriteLogs = 1,
-    NewLogger = 2,
-    ConfigurationUpdate = 3,
+    None = 1,
+    All = 2,
+    WriteLogs = 4,
+    NewLogger = 8,
+    ConfigurationUpdate = 16,
     Unknown = 1010
 };
 
-/**
- * @brief Responsible for server credentials
- */
+///
+/// @brief Responsible for server credentials
+///
 class Credentials : public el::Loggable
 {
 public:
@@ -39,10 +40,10 @@ private:
     int m_passKey;
     bool m_valid;
 
-    /**
-     * @brief parseUsers Parses usernames/password and stores into m_users hashmap
-     * @param usersStr Taken from param kUsersParam, format is something like: [me:mypass,john:pass1]
-     */
+    ///
+    /// @brief parseUsers Parses usernames/password and stores into m_users hashmap
+    /// @param usersStr Taken from param kUsersParam, format is something like: [me:mypass,john:pass1]
+    ///
     void parseUsers(const char* usersStr);
 };
 
