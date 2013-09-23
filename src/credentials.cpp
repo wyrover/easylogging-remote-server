@@ -56,6 +56,7 @@ bool Credentials::check(const std::string& username, const std::string& password
     // Unused warning
     (void)username;
     (void)password;
+    (void)permissions;
     return true;
 #endif
 }
