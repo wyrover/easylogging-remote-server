@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "easylogging++.h"
+#include "command_line_args.h"
 #include "credentials.h"
 
 _INITIALIZE_EASYLOGGINGPP
@@ -20,14 +21,12 @@ int main(int argc, char *argv[])
     return 0;//qapp.exec();
 }
 
-void configureLoggersFromArgs(int argc, char *argv[]) 
+void configureLoggersFromArgs(int argc, char *argv[])
 {
    for (int i = 1; i < argc; ++i) {
-        if (i != argc - 1) {
-            if (strcmp(argv[i], kGlobalConfigurationsFileParam) == 0) {
-                VLOG(3) << "Configuring loggers using configurations from [" << argv[i + 1] << "]";
-                el::Loggers::configureFromGlobal(argv[i + 1]);
-            }
+        if (hasLongParam(argv[i], kGlobalConfigurationsFileParam)) {
+            VLOG(3) << "Configuring loggers using configurations from [" << argv[i + 1] << "]";
+            el::Loggers::configureFromGlobal(getLongParamValue(argv[i], kGlobalConfigurationsFileParam));
         }
     } 
 }

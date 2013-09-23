@@ -2,20 +2,18 @@
 #include <cstring>
 #include <sstream>
 #include <utility>
+#include "command_line_args.h"
 
 const char* Credentials::kUsersParam = "--users";
 const char* Credentials::kPassKeyParam = "--passkey";
 
-
 Credentials::Credentials(int argc, char *argv[])
 {
     for (int i = 1; i < argc; ++i) {
-        if (i != argc - 1) {
-            if (strcmp(argv[i], Credentials::kUsersParam) == 0) {
-                parseUsers(argv[i + 1]);
-            } else if (strcmp(argv[i], Credentials::kPassKeyParam) == 0) {
-                m_passKey = atoi(argv[i + 1]);
-            }
+        if (hasLongParam(argv[i], Credentials::kUsersParam)) {
+            parseUsers(getLongParamValue(argv[i], Credentials::kUsersParam));
+        } else if (hasLongParam(argv[i], Credentials::kPassKeyParam)) {
+            m_passKey = atoi(getLongParamValue(argv[i], Credentials::kPassKeyParam));
         }
     }
 #ifdef SERVER_REQUIRES_PERMISSION
@@ -73,20 +71,13 @@ void Credentials::parseUsers(const char* usersStr)
     std::stringstream username;
     std::stringstream password;
     std::stringstream permissions;
-    bool isUsername = false;
+    bool isUsername = true;
     bool isPassword = false;
     bool isPermissions = false;
     for (; *usersStr; ++usersStr) {
         switch (*usersStr) {
         case ' ':
-            break;
         case '[':
-            username.str("");
-            password.str("");
-            permissions.str("");
-            isUsername = true;
-            isPassword = false;
-            isPermissions = false;
             break;
         case ':':
             isPassword = true;

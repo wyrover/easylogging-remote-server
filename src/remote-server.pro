@@ -22,18 +22,20 @@ DEFINES += _ELPP_QT_LOGGING \
      SERVER_REQUIRES_PERMISSION \
      SERVER_PASSKEY=123
 
-COMPILER = g++
+COMPILER = icpc
 QMAKE_CC = $$COMPILER
 QMAKE_CXX = $$COMPILER
 QMAKE_LINK = $$COMPILER
 
 SOURCES += main.cpp \
     credentials.cpp \
-    request_type.cpp
+    request_type.cpp \
+    command_line_args.cpp
 
 HEADERS  += \
     easylogging++.h \
     credentials.h \
-    request_type.h
+    request_type.h \
+    command_line_args.h
 
 FORMS    +=
