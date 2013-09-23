@@ -7,11 +7,11 @@
 #include "request_type.h"
 
 enum class Permissions : unsigned short {
-    None = 1,
-    All = 2,
-    WriteLogs = 4,
-    NewLogger = 8,
-    ConfigurationUpdate = 16,
+    None = 0,
+    All = 1,
+    WriteLogs = 2,
+    NewLogger = 4,
+    ConfigurationUpdate = 8,
     Unknown = 1010
 };
 
