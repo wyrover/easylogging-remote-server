@@ -32,14 +32,24 @@ Credentials::Credentials(int argc, char *argv[])
 #endif // SERVER_REQUIRES_PERMISSION
 }
 
-bool Credentials::checkCredentials(const std::string& username, const std::string& password) const
+bool Credentials::check(const std::string& username, const std::string& password, const Permissions& permissions) const
 {
     if (!m_valid)
         return false;
 #ifdef SERVER_REQUIRES_PERMISSION
     UsersHashMap::const_iterator it = m_users.find(username);
     if (it != m_users.end()) {
-        return it->second.first == password;
+        bool validPassword = it->second.first == password;
+        if (validPassword) {
+            if (static_cast<Permissions>(it->second.second) == Permissions::All) {
+                return true;
+            }
+            if (static_cast<Permissions>(it->second.second) == Permissions::None) {
+                return false;
+            }
+            return static_cast<unsigned short>(permissions) & it->second.second;
+        }
+        return false;
     }
     return false;
 #else
@@ -61,8 +71,10 @@ void Credentials::parseUsers(const char* usersStr)
     LOG(INFO) << "Parsing users from string: " << usersStr;
     std::stringstream username;
     std::stringstream password;
+    std::stringstream permissions;
     bool isUsername = false;
     bool isPassword = false;
+    bool isPermissions = false;
     for (; *usersStr; ++usersStr) {
         switch (*usersStr) {
         case ' ':
@@ -72,27 +84,41 @@ void Credentials::parseUsers(const char* usersStr)
             password.str("");
             isUsername = true;
             isPassword = false;
+            isPermissions = false;
             break;
         case ':':
             isPassword = true;
             isUsername = false;
+            isPermissions = false;
             password.str("");
+            break;
+        case '=':
+            isPassword = false;
+            isUsername = false;
+            isPermissions = true;
+            permissions.str("");
             break;
         case ',':
         case ']':
             // Store and continue
-            m_users.insert(std::pair<UsersHashMapKey, UsersHashMapValue>(username.str(), UsersHashMapValue(password.str(), CredentialsType::All)));
+            VLOG(3) << "Creating permissions for [" << username.str() << "] = [" << permissions.str() << "]";
+            m_users.insert(std::pair<UsersHashMapKey, UsersHashMapValue>(username.str(), UsersHashMapValue(password.str(), atoi(permissions.str().c_str()))));
             username.str("");
             password.str("");
+            permissions.str("");
             isUsername = true;
             isPassword = false;
+            isPermissions = false;
             break;
         default:
             if (isUsername) {
                 username << *usersStr;
             } else if (isPassword) {
                 password << *usersStr;
+            } else if (isPermissions) {
+                permissions << *usersStr;
             }
         }
     }
+    VLOG(3) << "Users: " << m_users;
 }

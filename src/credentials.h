@@ -6,7 +6,7 @@
 #include "easylogging++.h"
 #include "request_type.h"
 
-enum class CredentialsType : unsigned short {
+enum class Permissions : unsigned short {
     None = 1,
     All = 2,
     WriteLogs = 4,
@@ -22,7 +22,7 @@ class Credentials : public el::Loggable
 {
 public:
     typedef std::string UsersHashMapKey;
-    typedef std::pair<std::string, CredentialsType> UsersHashMapValue;
+    typedef std::pair<std::string, unsigned int> UsersHashMapValue;
     typedef std::unordered_map<UsersHashMapKey, UsersHashMapValue> UsersHashMap;
 
     static const char* kUsersParam;
@@ -33,7 +33,7 @@ public:
     inline const UsersHashMap& users(void) { return m_users; }
     inline int passKey(void) { return m_passKey; }
     inline bool valid(void) { return m_valid; }
-    bool checkCredentials(const std::string& username, const std::string& password) const;
+    bool check(const std::string& username, const std::string& password, const Permissions& permissions = Permissions::All) const;
     virtual void log(std::ostream &) const;
 private:
     UsersHashMap m_users;
