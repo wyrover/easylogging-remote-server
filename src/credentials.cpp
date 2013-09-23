@@ -7,14 +7,13 @@
 const char* Credentials::kUsersParam = "--users";
 const char* Credentials::kPassKeyParam = "--passkey";
 
-Credentials::Credentials(int argc, char *argv[])
+Credentials::Credentials(CommandLineArgs* commandLineArgs)
 {
-    for (int i = 1; i < argc; ++i) {
-        if (hasLongParam(argv[i], Credentials::kUsersParam)) {
-            parseUsers(getLongParamValue(argv[i], Credentials::kUsersParam));
-        } else if (hasLongParam(argv[i], Credentials::kPassKeyParam)) {
-            m_passKey = atoi(getLongParamValue(argv[i], Credentials::kPassKeyParam));
-        }
+    if (commandLineArgs->hasParamWithValue(Credentials::kUsersParam)) {
+        parseUsers(commandLineArgs->getParamValue(Credentials::kUsersParam));
+    }
+    if (commandLineArgs->hasParamWithValue(Credentials::kPassKeyParam)) {
+        m_passKey = atoi(commandLineArgs->getParamValue(Credentials::kPassKeyParam));
     }
 #ifdef SERVER_REQUIRES_PERMISSION
 #   ifndef SERVER_PASSKEY

@@ -15,6 +15,8 @@ enum class Permissions : unsigned short {
     Unknown = 1010
 };
 
+class CommandLineArgs;
+
 ///
 /// @brief Responsible for server credentials
 ///
@@ -28,7 +30,7 @@ public:
     static const char* kUsersParam;
     static const char* kPassKeyParam;
 
-    Credentials(int argc, char *argv[]);
+    Credentials(CommandLineArgs* commandLineArgs);
 
     inline const UsersHashMap& users(void) { return m_users; }
     inline int passKey(void) { return m_passKey; }

@@ -1,13 +1,19 @@
 #ifndef COMMAND_LINE_ARGS_H
 #define COMMAND_LINE_ARGS_H
-#include <cstring>
 
-extern bool hasLongParam(const char *arg, const char* paramKey);
+#include <string>
+#include <map>
+#include <vector>
 
-extern const char* getLongParamValue(char* arg, const char* paramKey);
-
-extern bool hasLongParam(const char *arg, const char* paramKey);
-
-extern const char* getLongParamValue(const char* arg, const char* paramKey);
+class CommandLineArgs {
+public:
+    explicit CommandLineArgs(int argc, char** argv);
+    bool hasParamWithValue(const char* paramKey) const;
+    const char* getParamValue(const char* paramKey) const;
+private:
+    int m_argc;
+    char** m_argv;
+    std::map<std::string, std::string> m_paramsWithValue;
+};
 
 #endif // COMMAND_LINE_ARGS_H
