@@ -2,10 +2,13 @@
 #include "easylogging++.h"
 #include "command_line_args.h"
 #include "credentials.h"
+//#include "server.h"
 
 _INITIALIZE_EASYLOGGINGPP
 
 static const char* kGlobalConfigurationsFileParam = "--loggers-conf";
+static const char* kPortParam = "--port";
+static const int kDefaultPort = 1690;
 
 void configureLoggersFromArgs(CommandLineArgs*);
 
@@ -19,7 +22,19 @@ int main(int argc, char *argv[])
     // Figure out credentials for current instance of server
     Credentials credentials(&commandLineArgs);
     LOG_IF(credentials.users().size() > 0, INFO) << "Credentials [" << credentials << "]";
-    return 0;//qapp.exec();
+
+    el::Helpers::addFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
+
+    int port = commandLineArgs.hasParamWithValue(kPortParam) ? atoi(commandLineArgs.getParamValue(kPortParam)) : kDefaultPort;
+    if (port == 0) {
+        port = kDefaultPort;
+    }
+
+    LOG(INFO) << "Server is starting" << (!commandLineArgs.empty() ? " using parameters " : "...") << commandLineArgs;
+    /*Server server;
+    server.start(port);*/
+
+    return qapp.exec();
 }
 
 void configureLoggersFromArgs(CommandLineArgs* commandLineArgs)

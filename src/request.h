@@ -7,13 +7,13 @@
 class Request
 {
 public:
-    Request(const std::string& jsonRequest);
-protected:
-    bool parseFromJson(const std::string& json);
-    const RequestType& type(void) const { return m_type; }
-private:
-    std::string m_jsonRequest;
-    RequestType m_type;
+    Request(void) {}
+    virtual ~Request(void) {}
+    virtual bool parseFromJson(const std::string& json) = 0;
+    virtual RequestType type(void) const = 0;
+    virtual bool valid(void) const = 0;
+    virtual const char* lastError(void) const = 0;
+    virtual const std::string& jsonRequest(void) const;
 };
 
 #endif // REQUEST_H

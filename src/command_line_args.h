@@ -4,13 +4,16 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "easylogging++.h"
 
-class CommandLineArgs {
+class CommandLineArgs : public el::Loggable {
 public:
-    explicit CommandLineArgs(int argc, char** argv);
+    CommandLineArgs(int argc, char** argv);
     bool hasParamWithValue(const char* paramKey) const;
     const char* getParamValue(const char* paramKey) const;
     bool hasParam(const char* paramKey) const;
+    bool empty(void) const;
+    virtual void log(std::ostream &) const;
 private:
     int m_argc;
     char** m_argv;

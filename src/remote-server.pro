@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,7 +22,7 @@ DEFINES += _ELPP_QT_LOGGING \
      SERVER_REQUIRES_PERMISSION \
      SERVER_PASSKEY=123
 
-COMPILER = icpc
+COMPILER = g++
 QMAKE_CC = $$COMPILER
 QMAKE_CXX = $$COMPILER
 QMAKE_LINK = $$COMPILER
@@ -31,13 +31,17 @@ SOURCES += main.cpp \
     credentials.cpp \
     request_type.cpp \
     command_line_args.cpp \
-    request.cpp
+    write_logs_request.cpp \
+    server.cpp
 
 HEADERS  += \
     easylogging++.h \
     credentials.h \
     request_type.h \
     command_line_args.h \
-    request.h
+    request.h \
+    write_logs_request.h \
+    server.h
 
-FORMS    +=
+INCLUDEPATH += third_party
+LIBS += -L../easylogging-remote-server/src/third_party -ljsoncpp

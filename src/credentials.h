@@ -30,7 +30,7 @@ public:
     static const char* kUsersParam;
     static const char* kPassKeyParam;
 
-    Credentials(CommandLineArgs* commandLineArgs);
+    explicit Credentials(CommandLineArgs* commandLineArgs);
 
     inline const UsersHashMap& users(void) { return m_users; }
     inline int passKey(void) { return m_passKey; }

@@ -1,6 +1,8 @@
 #ifndef REQUESTTYPE_H
 #define REQUESTTYPE_H
 
+#include <string>
+
 ///
 /// @brief Type of request received by client
 /// @detail Do not make it enum class because Intel C++ does not allow switch over it
@@ -16,6 +18,7 @@ class RequestTypeHelper {
 public:
     static const char* convertToString(const RequestType& requestType);
     static RequestType convertFromString(const char* requestTypeStr);
+    static RequestType findRequestTypeFromJson(const std::string& json);
 private:
     RequestTypeHelper(void);
     RequestTypeHelper(const RequestTypeHelper&);

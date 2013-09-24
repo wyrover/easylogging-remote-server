@@ -1,5 +1,7 @@
 #include "request_type.h"
 #include <cstring>
+#include <jsoncpp/json.h>
+#include "easylogging++.h"
 
 const char* RequestTypeHelper::convertToString(const RequestType& requestType)
 {
@@ -30,4 +32,21 @@ RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
         return RequestType::ConfigurationUpdate;
     }
     return RequestType::Unknown;
+}
+
+RequestType RequestTypeHelper::findRequestTypeFromJson(const std::string& json)
+{
+    Json::Value root;
+    Json::Reader reader;
+    try {
+        if (!reader.parse(json, root)) {
+            LOG(ERROR) << "Invalid json request: " << json;
+            return RequestType::Unknown;
+        }
+        Json::Value jsonType = root.get("type", "0");
+        return static_cast<RequestType>(static_cast<unsigned short>(jsonType.asUInt()));
+    } catch (...) {
+        LOG(ERROR) << "Request type not specified: " << json;
+        return RequestType::Unknown;
+    }
 }

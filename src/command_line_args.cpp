@@ -33,3 +33,17 @@ bool CommandLineArgs::hasParam(const char *paramKey) const
 {
     return std::find(m_params.begin(), m_params.end(), std::string(paramKey)) != m_params.end();
 }
+
+bool CommandLineArgs::empty(void) const
+{
+    return m_params.empty() && m_paramsWithValue.empty();
+}
+
+void CommandLineArgs::log(std::ostream& os) const
+{
+    for (int i = 1; i < m_argc; ++i) {
+        os << "[" << m_argv[i] << "]";
+        if (i < m_argc - 1)
+            os << " ";
+    }
+}
