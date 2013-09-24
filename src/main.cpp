@@ -26,7 +26,7 @@ void configureLoggersFromArgs(CommandLineArgs* commandLineArgs)
 {
     if (commandLineArgs->hasParamWithValue(kGlobalConfigurationsFileParam)) {
         const char* logConfPath = commandLineArgs->getParamValue(kGlobalConfigurationsFileParam);
-        VLOG(3) << "Configuring loggers using configurations from [" << logConfPath << "]";
+        LOG(INFO) << "Configuring loggers using configurations from [" << logConfPath << "]";
         el::Loggers::configureFromGlobal(logConfPath);
     }
 }

@@ -1,7 +1,6 @@
 #include "credentials.h"
 #include <cstring>
 #include <sstream>
-#include <utility>
 #include "command_line_args.h"
 
 const char* Credentials::kUsersParam = "--users";
@@ -96,7 +95,7 @@ void Credentials::parseUsers(const char* usersStr)
             // Store and continue
             if (permissions.str().empty()) permissions << "0";
             VLOG(3) << "Creating permissions for [" << username.str() << "] = [" << permissions.str() << "]";
-            m_users.insert(std::pair<UsersHashMapKey, UsersHashMapValue>(username.str(), UsersHashMapValue(password.str(), atoi(permissions.str().c_str()))));
+            m_users.insert(std::make_pair(username.str(), UsersHashMapValue(password.str(), atoi(permissions.str().c_str()))));
             username.str("");
             password.str("");
             permissions.str("");
