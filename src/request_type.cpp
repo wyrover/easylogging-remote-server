@@ -1,7 +1,7 @@
 #include "request_type.h"
 #include <cstring>
 
-const char *RequestTypeHelper::convertToString(const RequestType& requestType)
+const char* RequestTypeHelper::convertToString(const RequestType& requestType)
 {
     switch (requestType) {
         case RequestType::WriteLogs:

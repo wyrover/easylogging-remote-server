@@ -30,12 +30,14 @@ QMAKE_LINK = $$COMPILER
 SOURCES += main.cpp \
     credentials.cpp \
     request_type.cpp \
-    command_line_args.cpp
+    command_line_args.cpp \
+    request.cpp
 
 HEADERS  += \
     easylogging++.h \
     credentials.h \
     request_type.h \
-    command_line_args.h
+    command_line_args.h \
+    request.h
 
 FORMS    +=
