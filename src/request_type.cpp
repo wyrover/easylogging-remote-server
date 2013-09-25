@@ -12,6 +12,8 @@ const char* RequestTypeHelper::convertToString(const RequestType& requestType)
             return "NEW_LOGGER";
         case RequestType::ConfigurationUpdate:
             return "CONFIGURATION_UPDATE";
+        case RequestType::RunCommand:
+            return "RUN_COMMAND";
         default:
             return "UNKNOWN";
     }
@@ -27,6 +29,9 @@ RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
     }
     if ((strcmp(requestTypeStr, "CONFIGURATION_UPDATE") == 0) || (strcmp(requestTypeStr, "configuration_update") == 0)) {
         return RequestType::ConfigurationUpdate;
+    }
+    if ((strcmp(requestTypeStr, "RUN_COMMAND") == 0) || (strcmp(requestTypeStr, "run_command") == 0)) {
+        return RequestType::RunCommand;
     }
     return RequestType::Unknown;
 }

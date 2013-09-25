@@ -11,14 +11,15 @@ enum class Permissions : unsigned short {
     WriteLogs = 1,
     NewLogger = 2,
     ConfigurationUpdate = 4,
-    All = 8,
+    RunCommand = 8,
+    All = 16,
     Unknown = 1010
 };
 
 class PermissionsHelper {
 public:
     static Permissions convertRequestTypeShortToPermissions(unsigned short requestTypeShort);
-    static std::string convertPermissionsToString(const Permissions& permissions);
+    static const char* convertPermissionsToString(const Permissions& permissions);
 private:
     PermissionsHelper(void);
     PermissionsHelper(const PermissionsHelper&);

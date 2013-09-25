@@ -139,7 +139,7 @@ Permissions PermissionsHelper::convertRequestTypeShortToPermissions(unsigned sho
     return (static_cast<Permissions>(RequestTypeHelper::convertFromShort(requestTypeShort)));
 }
 
-std::string PermissionsHelper::convertPermissionsToString(const Permissions& permissions)
+const char* PermissionsHelper::convertPermissionsToString(const Permissions& permissions)
 {
     switch (permissions) {
         case Permissions::WriteLogs:
@@ -148,6 +148,8 @@ std::string PermissionsHelper::convertPermissionsToString(const Permissions& per
             return "NEW_LOGGER";
         case Permissions::ConfigurationUpdate:
             return "CONFIGURATION_UPDATE";
+        case Permissions::RunCommand:
+            return "RUN_COMMAND";
         default:
             return "UNKNOWN";
     }

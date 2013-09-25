@@ -11,6 +11,7 @@ enum RequestType : unsigned short {
     WriteLogs = 1,
     NewLogger = 2,
     ConfigurationUpdate = 4,
+    RunCommand = 8,
     Unknown = 1010
 };
 

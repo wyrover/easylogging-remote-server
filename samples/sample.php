@@ -54,6 +54,7 @@ class el {
     const Verbose = 128;
 
     public static function write($msg, $level, $logger = "remote") {
+        echo el::buildMsg($msg, $level, $logger);
         return RemoteConnection::getInstance()->write(el::buildMsg($msg, $level, $logger));
     }
  
@@ -69,8 +70,8 @@ class el {
        $msgArr['logger'] = $logger;
        $msgArr['log'] = $msg;
        $msgArr['vlevel'] = (int)0;
-       $msgArr['func'] = "func";
-       $msgArr['file'] = "file";
+       $msgArr['func'] = "";
+       $msgArr['file'] = "";
        $msgArr['line'] = (int)0;
        return json_encode($msgArr);
     }
