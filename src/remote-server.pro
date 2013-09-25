@@ -46,3 +46,6 @@ HEADERS  += \
 
 INCLUDEPATH += third_party
 LIBS += -L../easylogging-remote-server/src/third_party -ljsoncpp
+
+OTHER_FILES += \
+    ../conf/log.conf
