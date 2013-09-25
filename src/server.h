@@ -4,6 +4,7 @@
 #include <QTcpServer>
 
 class Request;
+class Credentials;
 
 class Server : public QTcpServer {
     Q_OBJECT
@@ -13,12 +14,12 @@ public:
     /// Time to wait until we are ready to process request from client
     static const int kReadTimeout = 60;
 
-    explicit Server(QObject *parent = nullptr);
+    explicit Server(Credentials* credentials, QObject *parent = nullptr);
     virtual ~Server(void);
     void start(int port);
 private:
     int m_port;
-
+    Credentials* m_credentials;
     Request* buildRequestFromPacket(const std::string& packet) const;
     void processRequest(Request* request);
 private slots:

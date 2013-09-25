@@ -7,8 +7,8 @@
 #include "request.h"
 #include "write_logs_request.h"
 
-Server::Server(QObject *parent) :
-    QTcpServer(parent), m_port(-1)
+Server::Server(Credentials *credentials, QObject *parent) :
+    QTcpServer(parent), m_port(-1), m_credentials(credentials)
 {
 }
 
@@ -41,12 +41,14 @@ void Server::packetReady(void)
     QTcpSocket* connection = static_cast<QTcpSocket*>(sender());
     LOG(INFO) << "Reading packet from connection [" << connection << "]";
     QString packet = QString(connection->readAll());
+    if (packet.startsWith("e")) exit(0);
     Request* request = buildRequestFromPacket(packet.toStdString());
     if (request == nullptr || !request->valid()) {
         connection->disconnectFromHost();
         LOG_IF(request != nullptr && !request->valid(), ERROR) << request->lastError();
         return;
     }
+    CHECK(request->checkPermissions(m_credentials));
     processRequest(request);
     delete request;
     connection->disconnectFromHost();

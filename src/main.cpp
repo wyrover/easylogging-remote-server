@@ -2,13 +2,13 @@
 #include "easylogging++.h"
 #include "command_line_args.h"
 #include "credentials.h"
-//#include "server.h"
+#include "server.h"
 
 _INITIALIZE_EASYLOGGINGPP
 
 static const char* kGlobalConfigurationsFileParam = "--loggers-conf";
 static const char* kPortParam = "--port";
-static const int kDefaultPort = 1690;
+static const int kDefaultPort = 1592;
 
 void configureLoggersFromArgs(CommandLineArgs*);
 
@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
     }
 
     LOG(INFO) << "Server is starting" << (!commandLineArgs.empty() ? " using parameters " : "...") << commandLineArgs;
-    /*Server server;
-    server.start(port);*/
+    Server server(&credentials);
+    server.start(port);
 
     return qapp.exec();
 }

@@ -8,13 +8,10 @@ const char* RequestTypeHelper::convertToString(const RequestType& requestType)
     switch (requestType) {
         case RequestType::WriteLogs:
             return "WRITE_LOGS";
-            break;
         case RequestType::NewLogger:
             return "NEW_LOGGER";
-            break;
         case RequestType::ConfigurationUpdate:
             return "CONFIGURATION_UPDATE";
-            break;
         default:
             return "UNKNOWN";
     }

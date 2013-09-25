@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     request_type.cpp \
     command_line_args.cpp \
     write_logs_request.cpp \
-    server.cpp
+    server.cpp \
+    request.cpp
 
 HEADERS  += \
     easylogging++.h \
