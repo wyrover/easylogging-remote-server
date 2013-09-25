@@ -83,7 +83,7 @@ std::string Credentials::getPermissions(const std::string& username) const
 
 void Credentials::parseUsers(const char* usersStr)
 {
-    LOG(INFO) << "Parsing users from string: " << usersStr;
+    VLOG(3) << "Parsing users from string: " << usersStr;
     std::stringstream username;
     std::stringstream password;
     std::stringstream permissions;
