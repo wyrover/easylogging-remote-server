@@ -65,7 +65,7 @@ class el {
     private static function buildMsg($msg, $level, $logger) {
        $msgArr['user'] = "mkhan";
        $msgArr['pwd'] = "pass";
-       $msgArr['type'] = (int)1;        // 0 = Log
+       $msgArr['type'] = (int)1;        // 1 = Log
        $msgArr['level'] = (int)$level;
        $msgArr['logger'] = $logger;
        $msgArr['log'] = $msg;
