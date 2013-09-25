@@ -22,3 +22,10 @@ RequestType WriteLogsRequest::type(void) const
 {
     return RequestType::WriteLogs;
 }
+
+bool WriteLogsRequest::process(void)
+{
+    VLOG(3) << "Processing request [" << RequestTypeHelper::convertToString(type()) << "]";
+
+    return true;
+}

@@ -19,6 +19,8 @@ class RequestTypeHelper {
 public:
     static const char* convertToString(const RequestType& requestType);
     static RequestType convertFromString(const char* requestTypeStr);
+    static unsigned short convertToShort(const RequestType& requestType);
+    static RequestType convertFromShort(unsigned short requestTypeShort);
     static RequestType findRequestTypeFromJson(const std::string& json);
 private:
     RequestTypeHelper(void);

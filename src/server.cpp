@@ -12,7 +12,7 @@ Server::Server(Credentials *credentials, QObject *parent) :
 {
 }
 
-Server::~Server()
+Server::~Server(void)
 {
     LOG(INFO) << "Stopping server on port [" << m_port << "]";
     close();
@@ -48,8 +48,12 @@ void Server::packetReady(void)
         LOG_IF(request != nullptr && !request->valid(), ERROR) << request->lastError();
         return;
     }
-    CHECK(request->checkPermissions(m_credentials));
-    processRequest(request);
+    if (!request->userHasPermissions(m_credentials)) {
+        LOG(ERROR) << "Unsuccessful attempt to [" << RequestTypeHelper::convertToString(request->type()) << "] by user [" <<
+                      request->user() << " (" << m_credentials->getPermissions(request->user()) << ")]";
+    } else {
+        request->process();
+    }
     delete request;
     connection->disconnectFromHost();
 }
@@ -70,9 +74,4 @@ Request* Server::buildRequestFromPacket(const std::string& packet) const
             break;
     }
     return request;
-}
-
-void Server::processRequest(Request* request)
-{
-
 }

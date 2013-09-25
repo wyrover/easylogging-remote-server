@@ -31,6 +31,16 @@ RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
     return RequestType::Unknown;
 }
 
+unsigned short RequestTypeHelper::convertToShort(const RequestType& requestType)
+{
+    return static_cast<RequestType>(requestType);
+}
+
+RequestType RequestTypeHelper::convertFromShort(unsigned short requestTypeShort)
+{
+    return static_cast<RequestType>(requestTypeShort);
+}
+
 RequestType RequestTypeHelper::findRequestTypeFromJson(const std::string& json)
 {
     Json::Value root;

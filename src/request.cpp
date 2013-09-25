@@ -4,19 +4,6 @@
 #include "credentials.h"
 #include "request_type.h"
 
-static Permissions convertRequestTypeToPermissions(const RequestType& requestType) {
-    switch (requestType) {
-        case RequestType::WriteLogs:
-            return Permissions::WriteLogs;
-        case RequestType::NewLogger:
-            return Permissions::NewLogger;
-        case RequestType::ConfigurationUpdate:
-            return Permissions::ConfigurationUpdate;
-        default:
-            return Permissions::Unknown;
-    }
-}
-
 Request::Request(const std::string& json) :
     m_jsonRequest(json)
 {
@@ -70,9 +57,14 @@ void Request::makeValid(void)
     m_lastError = "";
 }
 
-bool Request::checkPermissions(Credentials *credentials) const
+bool Request::userHasPermissions(Credentials* credentials) const
 {
-    return credentials->check(m_user, m_password, convertRequestTypeToPermissions(type()));
+    return credentials->check(m_user, m_password, PermissionsHelper::convertRequestTypeShortToPermissions(RequestTypeHelper::convertToShort(type())));
+}
+
+const std::string& Request::user(void) const
+{
+    return m_user;
 }
 
 const std::string& Request::jsonRequest(void) const

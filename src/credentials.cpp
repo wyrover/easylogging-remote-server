@@ -63,6 +63,24 @@ void Credentials::log(std::ostream& os) const
     os << "Pass key: [" << (m_valid ? "" : "not ") << "verified]";
 }
 
+std::string Credentials::getPermissions(const std::string& username) const
+{
+    UsersHashMap::const_iterator it = m_users.find(username);
+    if (it != m_users.end()) {
+        unsigned short flags = it->second.second;
+        std::stringstream ss;
+        for (unsigned short i = static_cast<unsigned short>(Permissions::All); ; i >>= 1) {
+            if (i & flags) {
+                ss << PermissionsHelper::convertPermissionsToString(static_cast<Permissions>(i)) << ", ";
+            }
+            if (i == 0) break;
+        }
+        std::string perms = ss.str();
+        return perms.erase(perms.size() - 2);
+    }
+    return std::string();
+}
+
 void Credentials::parseUsers(const char* usersStr)
 {
     LOG(INFO) << "Parsing users from string: " << usersStr;
@@ -114,4 +132,23 @@ void Credentials::parseUsers(const char* usersStr)
         }
     }
     VLOG(3) << "Users: " << m_users;
+}
+
+Permissions PermissionsHelper::convertRequestTypeShortToPermissions(unsigned short requestTypeShort)
+{
+    return (static_cast<Permissions>(RequestTypeHelper::convertFromShort(requestTypeShort)));
+}
+
+std::string PermissionsHelper::convertPermissionsToString(const Permissions& permissions)
+{
+    switch (permissions) {
+        case Permissions::WriteLogs:
+            return "WRITE_LOGS";
+        case Permissions::NewLogger:
+            return "NEW_LOGGER";
+        case Permissions::ConfigurationUpdate:
+            return "CONFIGURATION_UPDATE";
+        default:
+            return "UNKNOWN";
+    }
 }

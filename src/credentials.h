@@ -8,12 +8,23 @@
 
 enum class Permissions : unsigned short {
     None = 0,
-    All = 1,
-    WriteLogs = 2,
-    NewLogger = 4,
-    ConfigurationUpdate = 8,
+    WriteLogs = 1,
+    NewLogger = 2,
+    ConfigurationUpdate = 4,
+    All = 8,
     Unknown = 1010
 };
+
+class PermissionsHelper {
+public:
+    static Permissions convertRequestTypeShortToPermissions(unsigned short requestTypeShort);
+    static std::string convertPermissionsToString(const Permissions& permissions);
+private:
+    PermissionsHelper(void);
+    PermissionsHelper(const PermissionsHelper&);
+    PermissionsHelper& operator=(const PermissionsHelper&);
+};
+
 
 class CommandLineArgs;
 
@@ -24,7 +35,7 @@ class Credentials : public el::Loggable
 {
 public:
     typedef std::string UsersHashMapKey;
-    typedef std::pair<std::string, unsigned int> UsersHashMapValue;
+    typedef std::pair<std::string, unsigned short> UsersHashMapValue;
     typedef std::unordered_map<UsersHashMapKey, UsersHashMapValue> UsersHashMap;
 
     static const char* kUsersParam;
@@ -36,7 +47,8 @@ public:
     inline int passKey(void) { return m_passKey; }
     inline bool valid(void) { return m_valid; }
     bool check(const std::string& username, const std::string& password, const Permissions& permissions = Permissions::All) const;
-    virtual void log(std::ostream &) const;
+    virtual void log(std::ostream&) const;
+    std::string getPermissions(const std::string& username) const;
 private:
     UsersHashMap m_users;
     int m_passKey;

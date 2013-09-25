@@ -10,7 +10,8 @@ public:
     virtual ~WriteLogsRequest(void);
 
     virtual bool parseFromJson(const std::string& json);
-    virtual RequestType type(void) const;
+    virtual inline RequestType type(void) const;
+    virtual bool process(void);
 private:
 
 };
