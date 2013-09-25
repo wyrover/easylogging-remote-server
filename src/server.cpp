@@ -3,6 +3,7 @@
 #include <QTcpSocket>
 
 #include "easylogging++.h"
+#include "credentials.h"
 #include "request_type.h"
 #include "request.h"
 #include "write_logs_request.h"

@@ -2,7 +2,6 @@
 #define REQUESTTYPE_H
 
 #include <string>
-#include "credentials.h"
 
 ///
 /// @brief Type of request received by client
