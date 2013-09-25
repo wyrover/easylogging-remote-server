@@ -20,7 +20,7 @@ public:
     const char* lastError(void) const;
     const std::string& jsonRequest(void) const;
     void setError(const char* error);
-    void makeValid(void);
+    void markValid(void);
     bool userHasPermissions(Credentials* credentials) const;
     const std::string& user(void) const;
 private:

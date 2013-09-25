@@ -44,9 +44,14 @@ void Server::packetReady(void)
     QString packet = QString(connection->readAll());
     if (packet.startsWith("e")) exit(0);
     Request* request = buildRequestFromPacket(packet.toStdString());
-    if (request == nullptr || !request->valid()) {
+    if (request == nullptr) {
         connection->disconnectFromHost();
-        LOG_IF(request != nullptr && !request->valid(), ERROR) << request->lastError();
+        return;
+    }
+    if (!request->valid()) {
+        connection->disconnectFromHost();
+        LOG(ERROR) << request->lastError();
+        delete request;
         return;
     }
     if (!request->userHasPermissions(m_credentials)) {

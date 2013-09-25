@@ -14,7 +14,6 @@ public:
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 
-    const std::string& appName(void);
     const el::Level& level(void);
     const std::string& logger(void);
     const std::string& func(void);
@@ -23,7 +22,6 @@ public:
     int vLevel(void) const;
     const std::string& logMessage(void);
 private:
-    std::string m_appName;
     std::string m_logger;
     el::Level m_level;
     std::string m_func;

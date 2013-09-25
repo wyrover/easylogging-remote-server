@@ -31,7 +31,7 @@ bool Request::parseFromJson(const std::string& json)
     } catch (...) {
         return false;
     }
-    makeValid();
+    markValid();
     return true;
 }
 
@@ -51,7 +51,7 @@ void Request::setError(const char *error)
     m_lastError = error;
 }
 
-void Request::makeValid(void)
+void Request::markValid(void)
 {
     m_valid = true;
     m_lastError = "";

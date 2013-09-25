@@ -25,9 +25,6 @@ bool WriteLogsRequest::parseFromJson(const std::string& json)
     } catch (...) {
         return false;
     }
-    // App Name
-    Json::Value jsonAppName = root.get("app", "remove-server");
-    m_appName = jsonAppName.asString();
     // Logger
     Json::Value jsonLogger = root.get("logger", "remote");
     m_logger = jsonLogger.asString();
@@ -55,7 +52,7 @@ bool WriteLogsRequest::parseFromJson(const std::string& json)
     if (jsonLine.isUInt()) {
         m_line = static_cast<unsigned int>(jsonLine.asUInt());
     }
-    makeValid();
+    markValid();
     return true;
 }
 
@@ -74,10 +71,6 @@ bool WriteLogsRequest::process(void)
         el::base::Writer(m_logger, m_level, m_file.c_str(), m_line, m_func.c_str(), m_vLevel) << m_logMessage;
     }
     return true;
-}
-
-const std::string& WriteLogsRequest::appName(void) {
-    return m_appName;
 }
 
 const std::string& WriteLogsRequest::logger(void) {
