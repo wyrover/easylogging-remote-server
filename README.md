@@ -17,3 +17,15 @@ You can send request to this server in JSON format, this is only acceptable form
 |---------------|---------------------------------------------------------------|
 | user          | Username for server to send request. (For security purposes)  |
 | pwd           | Password for username. (For security purposes)                |
+| type          | Type of request you are sending, this is integral value       |
+
+#### Write Logs (type: 1)
+|      Key      |                  Description                                  |
+|---------------|---------------------------------------------------------------|
+| logger        | Logger to write log, defaults to `remote`                     |
+| level         | Log severity level (integral value: Debug = 2, Info = 4, Warning = 8, Error = 16, Fatal = 32, Trace = 64,Verbose = 128)  |
+| log           | Log message                                                   |
+| vlevel        | Verbose level (integer, 0 - 9)                                |
+| func          | Log function                                                  |
+| file          | Log source file                                               |
+| line          | Log line                                                      |
