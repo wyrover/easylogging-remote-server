@@ -5,18 +5,16 @@
 
 const char* RequestTypeHelper::convertToString(const RequestType& requestType)
 {
-    switch (requestType) {
-        case RequestType::WriteLogs:
-            return "WRITE_LOGS";
-        case RequestType::NewLogger:
-            return "NEW_LOGGER";
-        case RequestType::ConfigurationUpdate:
-            return "CONFIGURATION_UPDATE";
-        case RequestType::RunCommand:
-            return "RUN_COMMAND";
-        default:
-            return "UNKNOWN";
-    }
+    // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
+    if (requestType == RequestType::WriteLogs)
+        return "WRITE_LOGS";
+    if (requestType == RequestType::NewLogger)
+        return "NEW_LOGGER";
+    if (requestType == RequestType::ConfigurationUpdate)
+        return "CONFIGURATION_UPDATE";
+    if (requestType == RequestType::RunCommand)
+        return "RUN_COMMAND";
+    return "UNKNOWN";
 }
 
 RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
@@ -38,7 +36,7 @@ RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
 
 unsigned short RequestTypeHelper::convertToShort(const RequestType& requestType)
 {
-    return static_cast<RequestType>(requestType);
+    return static_cast<unsigned short>(requestType);
 }
 
 RequestType RequestTypeHelper::convertFromShort(unsigned short requestTypeShort)

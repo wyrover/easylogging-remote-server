@@ -5,9 +5,8 @@
 
 ///
 /// @brief Type of request received by client
-/// @detail Do not make it enum class because Intel C++ does not allow switch over it
 ///
-enum RequestType : unsigned short {
+enum class RequestType : unsigned short {
     WriteLogs = 1,
     NewLogger = 2,
     ConfigurationUpdate = 4,

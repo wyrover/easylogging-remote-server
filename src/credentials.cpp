@@ -145,16 +145,14 @@ Permissions PermissionsHelper::convertRequestTypeShortToPermissions(unsigned sho
 
 const char* PermissionsHelper::convertPermissionsToString(const Permissions& permissions)
 {
-    switch (permissions) {
-        case Permissions::WriteLogs:
-            return "WRITE_LOGS";
-        case Permissions::NewLogger:
-            return "NEW_LOGGER";
-        case Permissions::ConfigurationUpdate:
-            return "CONFIGURATION_UPDATE";
-        case Permissions::RunCommand:
-            return "RUN_COMMAND";
-        default:
-            return "UNKNOWN";
-    }
+    // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
+    if (permissions == Permissions::WriteLogs)
+        return "WRITE_LOGS";
+    if (permissions == Permissions::NewLogger)
+        return "NEW_LOGGER";
+    if (permissions == Permissions::ConfigurationUpdate)
+        return "CONFIGURATION_UPDATE";
+    if (permissions == Permissions::RunCommand)
+        return "RUN_COMMAND";
+    return "UNKNOWN";
 }

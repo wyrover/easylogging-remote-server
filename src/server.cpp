@@ -67,17 +67,19 @@ void Server::packetReady(void)
 Request* Server::buildRequestFromPacket(const std::string& packet) const
 {
     Request* request = nullptr;
-    switch (RequestTypeHelper::findRequestTypeFromJson(packet)) {
-        case RequestType::WriteLogs:
-            request = new WriteLogsRequest(packet);
-            break;
-        case RequestType::NewLogger:
-            break;
-        case RequestType::ConfigurationUpdate:
-            break;
-        default:
-            // Ignore, error is logged from findRequestTypeFromJson(..)
-            break;
+
+    // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
+    RequestType type = RequestTypeHelper::findRequestTypeFromJson(packet);
+    if (type == RequestType::WriteLogs) {
+        request = new WriteLogsRequest(packet);
+    } else if (type == RequestType::NewLogger) {
+
+    } else if (type == RequestType::ConfigurationUpdate) {
+
+    } else if (type == RequestType::RunCommand) {
+
+    } else {
+        // Ignore, error is logged from findRequestTypeFromJson(..)
     }
     return request;
 }
