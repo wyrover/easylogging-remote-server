@@ -27,13 +27,13 @@ QMAKE_CC = $$COMPILER
 QMAKE_CXX = $$COMPILER
 QMAKE_LINK = $$COMPILER
 
-SOURCES += main.cpp \
-    credentials.cpp \
-    request_type.cpp \
-    command_line_args.cpp \
-    write_logs_request.cpp \
-    server.cpp \
-    request.cpp
+SOURCES += main.cc \
+    credentials.cc \
+    request_type.cc \
+    command_line_args.cc \
+    write_logs_request.cc \
+    server.cc \
+    request.cc
 
 HEADERS  += \
     easylogging++.h \
