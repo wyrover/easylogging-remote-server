@@ -7,6 +7,8 @@
 Request::Request(const std::string& json) :
     m_jsonRequest(json)
 {
+    setLastError("");
+    setValid(true);
     parseFromJson(jsonRequest());
 }
 
@@ -29,10 +31,22 @@ bool Request::parseFromJson(const std::string& json)
         m_password = jsonPassword.asString();
         LOG_IF(!m_user.empty(), INFO) << "Request received by [" << m_user << "]";
     } catch (...) {
+        setLastError("Error occured while parsing json request");
+        setValid(false);
         return false;
     }
-    markValid();
+    setValid(true);
     return true;
+}
+
+const std::string& Request::lastError(void) const
+{
+    return m_lastError;
+}
+
+void Request::setLastError(const std::string& error)
+{
+    m_lastError = error;
 }
 
 bool Request::valid(void) const
@@ -40,20 +54,9 @@ bool Request::valid(void) const
     return m_valid;
 }
 
-const char* Request::lastError() const
+void Request::setValid(bool isValid)
 {
-    return m_lastError;
-}
-
-void Request::setError(const char *error)
-{
-    m_valid = false;
-    m_lastError = error;
-}
-
-void Request::markValid(void)
-{
-    m_valid = true;
+    m_valid = isValid;
     m_lastError = "";
 }
 

@@ -17,15 +17,15 @@ public:
     virtual bool process(void) = 0;
 
     bool valid(void) const;
-    const char* lastError(void) const;
+    void setValid(bool isValid);
+    const std::string& lastError(void) const;
+    void setLastError(const std::string& error);
     const std::string& jsonRequest(void) const;
-    void setError(const char* error);
-    void markValid(void);
     bool userHasPermissions(Credentials* credentials) const;
     const std::string& user(void) const;
 private:
     std::string m_jsonRequest;
-    const char* m_lastError;
+    std::string m_lastError;
     bool m_valid;
     std::string m_user;
     std::string m_password;

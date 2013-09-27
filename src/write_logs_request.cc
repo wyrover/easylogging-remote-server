@@ -19,7 +19,8 @@ bool WriteLogsRequest::parseFromJson(const std::string& json)
     Json::Reader reader;
     try {
         if (!reader.parse(json, root)) {
-            LOG(ERROR) << "Invalid json request: " << json;
+            setValid(false);
+            setLastError("Invalid json request: " + json);
             return false;
         }
     } catch (...) {
@@ -52,7 +53,7 @@ bool WriteLogsRequest::parseFromJson(const std::string& json)
     if (jsonLine.isUInt()) {
         m_line = static_cast<unsigned int>(jsonLine.asUInt());
     }
-    markValid();
+    setValid(true);
     return true;
 }
 
