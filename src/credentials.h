@@ -26,9 +26,6 @@ private:
     PermissionsHelper& operator=(const PermissionsHelper&);
 };
 
-
-class CommandLineArgs;
-
 ///
 /// @brief Responsible for server credentials
 ///
@@ -42,7 +39,7 @@ public:
     static const char* kUsersParam;
     static const char* kPassKeyParam;
 
-    explicit Credentials(CommandLineArgs* commandLineArgs);
+    Credentials(void);
 
     inline const UsersHashMap& users(void) { return m_users; }
     inline int passKey(void) { return m_passKey; }

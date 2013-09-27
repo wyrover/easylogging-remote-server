@@ -1,18 +1,17 @@
 #include "credentials.h"
 #include <cstring>
 #include <sstream>
-#include "command_line_args.h"
 
 const char* Credentials::kUsersParam = "--users";
 const char* Credentials::kPassKeyParam = "--passkey";
 
-Credentials::Credentials(CommandLineArgs* commandLineArgs)
+Credentials::Credentials(void)
 {
-    if (commandLineArgs->hasParamWithValue(Credentials::kUsersParam)) {
-        parseUsers(commandLineArgs->getParamValue(Credentials::kUsersParam));
+    if (el::Helpers::commandLineArgs()->hasParamWithValue(Credentials::kUsersParam)) {
+        parseUsers(el::Helpers::commandLineArgs()->getParamValue(Credentials::kUsersParam));
     }
-    if (commandLineArgs->hasParamWithValue(Credentials::kPassKeyParam)) {
-        m_passKey = atoi(commandLineArgs->getParamValue(Credentials::kPassKeyParam));
+    if (el::Helpers::commandLineArgs()->hasParamWithValue(Credentials::kPassKeyParam)) {
+        m_passKey = atoi(el::Helpers::commandLineArgs()->getParamValue(Credentials::kPassKeyParam));
     }
 #ifdef SERVER_REQUIRES_PERMISSION
 #   ifndef SERVER_PASSKEY

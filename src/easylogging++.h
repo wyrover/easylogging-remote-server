@@ -1,5 +1,5 @@
 //
-//  Easylogging++ v9.19
+//  Easylogging++ v9.20
 //  Single-header only, cross-platform logging library for C++ applications
 //
 //  Author Majid Khan
@@ -450,19 +450,19 @@ public:
         // Do not use switch over strongly typed enums because Intel C++ compilers dont support them yet.
         if (level == Level::Global)
             return "GLOBAL";
-        else if (level == Level::Debug)
+        if (level == Level::Debug)
             return "DEBUG";
-        else if (level == Level::Info)
+        if (level == Level::Info)
             return "INFO";
-        else if (level == Level::Warning)
+        if (level == Level::Warning)
             return "WARNING";
-        else if (level == Level::Error)
+        if (level == Level::Error)
             return "ERROR";
-        else if (level == Level::Fatal)
+        if (level == Level::Fatal)
             return "FATAL";
-        else if (level == Level::Verbose)
+        if (level == Level::Verbose)
             return "VERBOSE";
-        else if (level == Level::Trace)
+        if (level == Level::Trace)
             return "TRACE";
         return "UNKNOWN";
     }
@@ -473,19 +473,19 @@ public:
     static Level convertFromString(const char* levelStr) {
         if ((strcmp(levelStr, "GLOBAL") == 0) || (strcmp(levelStr, "global") == 0))
             return Level::Global;
-        else if ((strcmp(levelStr, "DEBUG") == 0) || (strcmp(levelStr, "debug") == 0))
+        if ((strcmp(levelStr, "DEBUG") == 0) || (strcmp(levelStr, "debug") == 0))
             return Level::Debug;
-        else if ((strcmp(levelStr, "INFO") == 0) || (strcmp(levelStr, "info") == 0))
+        if ((strcmp(levelStr, "INFO") == 0) || (strcmp(levelStr, "info") == 0))
             return Level::Info;
-        else if ((strcmp(levelStr, "WARNING") == 0) || (strcmp(levelStr, "warning") == 0))
+        if ((strcmp(levelStr, "WARNING") == 0) || (strcmp(levelStr, "warning") == 0))
             return Level::Warning;
-        else if ((strcmp(levelStr, "ERROR") == 0) || (strcmp(levelStr, "error") == 0))
+        if ((strcmp(levelStr, "ERROR") == 0) || (strcmp(levelStr, "error") == 0))
             return Level::Error;
-        else if ((strcmp(levelStr, "FATAL") == 0) || (strcmp(levelStr, "fatal") == 0))
+        if ((strcmp(levelStr, "FATAL") == 0) || (strcmp(levelStr, "fatal") == 0))
             return Level::Fatal;
-        else if ((strcmp(levelStr, "VERBOSE") == 0) || (strcmp(levelStr, "verbose") == 0))
+        if ((strcmp(levelStr, "VERBOSE") == 0) || (strcmp(levelStr, "verbose") == 0))
             return Level::Verbose;
-        else if ((strcmp(levelStr, "TRACE") == 0) || (strcmp(levelStr, "trace") == 0))
+        if ((strcmp(levelStr, "TRACE") == 0) || (strcmp(levelStr, "trace") == 0))
             return Level::Trace;
         return Level::Unknown;
     }
@@ -578,19 +578,19 @@ public:
         // Do not use switch over strongly typed enums because Intel C++ compilers dont support them yet.
         if (configurationType == ConfigurationType::Enabled)
             return "ENABLED";
-        else if (configurationType == ConfigurationType::Filename)
+        if (configurationType == ConfigurationType::Filename)
             return "FILENAME";
-        else if (configurationType == ConfigurationType::Format)
+        if (configurationType == ConfigurationType::Format)
             return "FORMAT";
-        else if (configurationType == ConfigurationType::ToFile)
+        if (configurationType == ConfigurationType::ToFile)
             return "TO_FILE";
-        else if (configurationType == ConfigurationType::ToStandardOutput)
+        if (configurationType == ConfigurationType::ToStandardOutput)
             return "TO_STANDARD_OUTPUT";
-        else if (configurationType == ConfigurationType::MillisecondsWidth)
+        if (configurationType == ConfigurationType::MillisecondsWidth)
             return "MILLISECONDS_WIDTH";
-        else if (configurationType == ConfigurationType::PerformanceTracking)
+        if (configurationType == ConfigurationType::PerformanceTracking)
             return "PERFORMANCE_TRACKING";
-        else if (configurationType == ConfigurationType::MaxLogFileSize)
+        if (configurationType == ConfigurationType::MaxLogFileSize)
             return "MAX_LOG_FILE_SIZE";
         return "UNKNOWN";
     }
@@ -601,19 +601,19 @@ public:
     static ConfigurationType convertFromString(const char* configStr) {
         if ((strcmp(configStr, "ENABLED") == 0) || (strcmp(configStr, "enabled") == 0))
             return ConfigurationType::Enabled;
-        else if ((strcmp(configStr, "TO_FILE") == 0) || (strcmp(configStr, "to_file") == 0))
+        if ((strcmp(configStr, "TO_FILE") == 0) || (strcmp(configStr, "to_file") == 0))
             return ConfigurationType::ToFile;
-        else if ((strcmp(configStr, "TO_STANDARD_OUTPUT") == 0) || (strcmp(configStr, "to_standard_output") == 0))
+        if ((strcmp(configStr, "TO_STANDARD_OUTPUT") == 0) || (strcmp(configStr, "to_standard_output") == 0))
             return ConfigurationType::ToStandardOutput;
-        else if ((strcmp(configStr, "FORMAT") == 0) || (strcmp(configStr, "format") == 0))
+        if ((strcmp(configStr, "FORMAT") == 0) || (strcmp(configStr, "format") == 0))
             return ConfigurationType::Format;
-        else if ((strcmp(configStr, "FILENAME") == 0) || (strcmp(configStr, "filename") == 0))
+        if ((strcmp(configStr, "FILENAME") == 0) || (strcmp(configStr, "filename") == 0))
             return ConfigurationType::Filename;
-        else if ((strcmp(configStr, "MILLISECONDS_WIDTH") == 0) || (strcmp(configStr, "milliseconds_width") == 0))
+        if ((strcmp(configStr, "MILLISECONDS_WIDTH") == 0) || (strcmp(configStr, "milliseconds_width") == 0))
             return ConfigurationType::MillisecondsWidth;
-        else if ((strcmp(configStr, "PERFORMANCE_TRACKING") == 0) || (strcmp(configStr, "performance_tracking") == 0))
+        if ((strcmp(configStr, "PERFORMANCE_TRACKING") == 0) || (strcmp(configStr, "performance_tracking") == 0))
             return ConfigurationType::PerformanceTracking;
-        else if ((strcmp(configStr, "MAX_LOG_FILE_SIZE") == 0) || (strcmp(configStr, "max_log_file_size") == 0))
+        if ((strcmp(configStr, "MAX_LOG_FILE_SIZE") == 0) || (strcmp(configStr, "max_log_file_size") == 0))
             return ConfigurationType::MaxLogFileSize;
         return ConfigurationType::Unknown;
     }
@@ -695,6 +695,7 @@ namespace consts {
     // Miscellaneous constants
     static const char* kDefaultLoggerId                        =      "default";
     static const char* kPerformanceLoggerId                    =      "performance";
+    static const char* kInternalHelperLoggerId                 =      "el_internal_helper_logger";
     static const char* kNullPointer                            =      "nullptr";
     static const char  kFormatEscapeChar                       =      '%';
     static const unsigned short kMaxLogPerContainer            =      100;
@@ -782,9 +783,8 @@ namespace utils {
 /// @param pointer Valid pointer to be deleted
 template <typename T>
 inline static void safeDelete(T*& pointer) {
-    if (pointer == nullptr) {
+    if (pointer == nullptr)
         return;
-    }
     delete pointer;
     pointer = nullptr;
 }
@@ -795,17 +795,14 @@ inline static const char* charPtrVal(const char* pointer) {
 /// @brief Bitwise operations for C++11 strong enum class. This casts e into Flag_T and returns value after bitwise operation
 /// Use these function as <pre>flag = bitOr<MyEnum>(MyEnum::val1, flag);</pre>
 namespace bitwise {
-
 template <typename EnumType>
 inline static unsigned short And(EnumType e, unsigned short flag) {
     return static_cast<unsigned short>(flag) & static_cast<unsigned short>(e);
 }
-
 template <typename EnumType>
 inline static unsigned short Not(EnumType e, unsigned short flag) {
     return static_cast<unsigned short>(flag) & ~(static_cast<unsigned short>(e));
 }
-
 template <typename EnumType>
 inline static unsigned short Or(EnumType e, unsigned short flag) {
     return static_cast<unsigned short>(flag) | static_cast<unsigned short>(e);
@@ -1525,7 +1522,87 @@ private:
         return buf;
     }
 };
-
+/// @brief Command line arguments for application if specified using el::Helpers::setArgs(..) or _START_EASYLOGGINGPP(..)
+class CommandLineArgs {
+public:
+    CommandLineArgs(void) {
+        setArgs(0, static_cast<char**>(nullptr));
+    }
+    CommandLineArgs(int argc, const char** argv) {
+        setArgs(argc, argv);
+    }
+    CommandLineArgs(int argc, char** argv) {
+        setArgs(argc, argv);
+    }
+    virtual ~CommandLineArgs(void) {}
+    /// @brief Sets arguments and parses them
+    inline void setArgs(int argc, const char** argv) {
+        setArgs(argc, const_cast<char**>(argv));
+    }
+    /// @brief Sets arguments and parses them
+    inline void setArgs(int argc, char** argv) {
+        m_params.clear();
+        m_paramsWithValue.clear();
+        if (argc == 0 || argv == nullptr) {
+            return;
+        }
+        m_argc = argc;
+        m_argv = argv;
+        for (int i = 1; i < m_argc; ++i) {
+            const char* v = (strstr(m_argv[i], "="));
+            if (v != nullptr && strlen(v) > 0) {
+                std::string key = std::string(m_argv[i]);
+                key = key.substr(0, key.find_first_of('='));
+                if (hasParamWithValue(key.c_str())) {
+                    ELPP_INTERNAL_INFO("Skipping [" << key << "] arg since it already has value [" << getParamValue(key.c_str()) << "]");
+                } else {
+                    m_paramsWithValue.insert(std::make_pair(key, std::string(v + 1)));
+                }
+            }
+            if (v == nullptr) {
+                if (hasParam(m_argv[i])) {
+                    ELPP_INTERNAL_INFO("Skipping [" << m_argv[i] << "] arg since it already exists");
+                } else {
+                    m_params.push_back(std::string(m_argv[i]));
+                }
+            }
+        }
+    }
+    /// @brief Returns true if arguments contain paramKey with a value (seperated by '=')
+    inline bool hasParamWithValue(const char* paramKey) const {
+        return m_paramsWithValue.find(std::string(paramKey)) != m_paramsWithValue.end();
+    }
+    /// @brief Returns value of arguments
+    /// @see hasParamWithValue(const char*)
+    inline const char* getParamValue(const char* paramKey) const {
+        return m_paramsWithValue.find(std::string(paramKey))->second.c_str();
+    }
+    /// @brief Return true if arguments has a param (not having a value) i,e without '='
+    inline bool hasParam(const char* paramKey) const {
+        return std::find(m_params.begin(), m_params.end(), std::string(paramKey)) != m_params.end();
+    }
+    /// @brief Returns true if no params available. This exclude argv[0]
+    inline bool empty(void) const {
+        return m_params.empty() && m_paramsWithValue.empty();
+    }
+    /// @brief Returns total number of arguments. This exclude argv[0]
+    inline std::size_t size(void) const {
+        return m_params.size() + m_paramsWithValue.size();
+    }
+    inline friend std::ostream& operator<<(std::ostream& os, const CommandLineArgs& c) {
+        for (int i = 1; i < c.m_argc; ++i) {
+            os << "[" << c.m_argv[i] << "]";
+            if (i < c.m_argc - 1)
+                os << " ";
+        }
+        return os;
+    }
+private:
+    int m_argc;
+    char** m_argv;
+    std::map<std::string, std::string> m_paramsWithValue;
+    std::vector<std::string> m_params;
+};
 /// @brief Abstract registry (aka repository) that provides basic interface for pointer repository specified by T_Ptr type.
 ///
 /// @detail Most of the functions are virtual final methods but anything implementing this abstract class should implement
@@ -2020,6 +2097,7 @@ private:
 };
 } // namespace base
 class Loggers;
+class Helpers;
 /// @brief Represents single configuration that has representing level, configuration type and a string based value.
 ///
 /// @detail String based value means any value either its boolean, integer or string itself, it will be embedded inside quotes
@@ -2376,6 +2454,10 @@ public:
             std::size_t quotesEnd = std::string::npos;
             if (quotesStart != std::string::npos) {
                 quotesEnd = line.find("\"", quotesStart + 1);
+                while (quotesEnd != std::string::npos && line.at(quotesEnd - 1) == '\\') {
+                    // Do not erase slash yet - we will erase it in parseLine(..) while loop
+                    quotesEnd = line.find("\"", quotesEnd + 2);
+                }
             }
             if ((foundAt = line.find(base::consts::kConfigurationComment)) != std::string::npos) {
                 if (foundAt < quotesEnd) {
@@ -2433,6 +2515,11 @@ public:
                 std::size_t quotesEnd = std::string::npos;
                 if (quotesStart != std::string::npos) {
                     quotesEnd = currValue.find("\"", quotesStart + 1);
+                    while (quotesEnd != std::string::npos && currValue.at(quotesEnd - 1) == '\\') {
+                        currValue = currValue.erase(quotesEnd - 1, 1);
+                        quotesEnd = currValue.find("\"", quotesEnd + 2);
+                    }
+
                 }
                 if (quotesStart != std::string::npos && quotesEnd != std::string::npos) {
                     // Quote provided - check and strip if valid
@@ -2989,6 +3076,7 @@ private:
     friend class base::LogDispatcher;
     friend class base::Writer;
     friend class el::Loggers;
+    friend class el::Helpers;
     friend class base::Storage;
     friend class base::Trackable;
 
@@ -3166,6 +3254,24 @@ public:
         return m_modules;
     }
 
+    void setFromArgs(const base::utils::CommandLineArgs* commandLineArgs) {
+        if (commandLineArgs->hasParam("-v") || commandLineArgs->hasParam("--verbose") ||
+            commandLineArgs->hasParam("-V") || commandLineArgs->hasParam("--VERBOSE")) {
+            setLevel(base::consts::kMaxVerboseLevel);
+        } else if (commandLineArgs->hasParamWithValue("--v")) {
+            setLevel(atoi(commandLineArgs->getParamValue("--v")));
+        } else if (commandLineArgs->hasParamWithValue("--V")) {
+            setLevel(atoi(commandLineArgs->getParamValue("--V")));
+        }
+#if (!defined(_ELPP_DISABLE_VMODULES))
+        else if (commandLineArgs->hasParamWithValue("-vmodule")) {
+            setModules(commandLineArgs->getParamValue("-vmodule"));
+        } else if (commandLineArgs->hasParamWithValue("-VMODULE")) {
+            setModules(commandLineArgs->getParamValue("-VMODULE"));
+        }
+#endif // (!defined(_ELPP_DISABLE_VMODULES))
+    }
+
 private:
     VLevel m_level;
     std::map<std::string, VLevel> m_modules;
@@ -3206,12 +3312,20 @@ public:
         m_vRegistry(new base::VRegistry(0)),
         m_flags(0x0),
         m_preRollOutHandler(base::defaultPreRollOutHandler) {
+
         // Register default logger
         m_registeredLoggers->get(std::string(base::consts::kDefaultLoggerId));
+
         // Register performance logger and reconfigure format
         Logger* performanceLogger = m_registeredLoggers->get(std::string(base::consts::kPerformanceLoggerId));
         performanceLogger->refConfigurations().setGlobally(ConfigurationType::Format, "%datetime %level %log");
         performanceLogger->reconfigure();
+
+        // Register template helper test logger - see Helpers::convertTemplateToStdString(const T&)
+        Logger* templateHelperLogger = m_registeredLoggers->get(std::string(base::consts::kInternalHelperLoggerId));
+        templateHelperLogger->refConfigurations().setGlobally(ConfigurationType::Format, "[DO NOT USE THIS LOGGER '%logger']");
+        templateHelperLogger->reconfigure();
+
         addFlag(LoggingFlag::AllowVerboseIfModuleNotSpecified);
         ELPP_INTERNAL_INFO("Easylogging++ has been initialized");
     }
@@ -3236,6 +3350,10 @@ public:
 
     inline base::VRegistry* vRegistry(void) const {
         return m_vRegistry;
+    }
+
+    inline const base::utils::CommandLineArgs* commandLineArgs(void) const {
+        return &m_commandLineArgs;
     }
 
     inline void addFlag(const LoggingFlag& flag) {
@@ -3275,6 +3393,7 @@ private:
     base::RegisteredHitCounters* m_registeredHitCounters;
     base::RegisteredLoggers* m_registeredLoggers;
     base::VRegistry* m_vRegistry;
+    base::utils::CommandLineArgs m_commandLineArgs;
     unsigned short m_flags;
     PreRollOutHandler m_preRollOutHandler;
     std::stringstream m_tempStream;
@@ -3292,34 +3411,8 @@ private:
     }
 
     void setApplicationArguments(int argc, char** argv) {
-        while (argc-- > 0) {
-            // Look for --v=X argument
-            if ((strlen(argv[argc]) >= 5) && (argv[argc][0] == '-') && (argv[argc][1] == '-') &&
-                    (argv[argc][2] == 'v' || argv[argc][2] == 'V') && (argv[argc][3] == '=') &&
-                    (isdigit(argv[argc][4]))) {
-                // Current argument is --v=X
-                // where X is a digit between 0-9
-                m_vRegistry->setLevel(atoi(argv[argc] + 4));
-            }
-            // Look for -v argument
-            else if ((strlen(argv[argc]) == 2) && (base::utils::Str::cStringCaseEq(argv[argc], "-v"))) {
-                m_vRegistry->setLevel(base::consts::kMaxVerboseLevel);
-            }
-            // Look for --verbose argument
-            else if ((strlen(argv[argc]) == 9) && (base::utils::Str::cStringCaseEq(argv[argc], "--verbose"))) {
-                m_vRegistry->setLevel(base::consts::kMaxVerboseLevel);
-            }
-#if (!defined(_ELPP_DISABLE_VMODULES))
-            // Look for -vmodule=
-            else if ((strlen(argv[argc]) >= 9) && (argv[argc][0] == '-') && (argv[argc][1] == 'v' || argv[argc][1] == 'V') &&
-                     (argv[argc][2] == 'm' || argv[argc][2] == 'M') && (argv[argc][3] == 'o' || argv[argc][3] == 'O') &&
-                     (argv[argc][4] == 'd' || argv[argc][4] == 'D') && (argv[argc][5] == 'u' || argv[argc][5] == 'U') &&
-                     (argv[argc][6] == 'l' || argv[argc][6] == 'L') && (argv[argc][7] == 'e' || argv[argc][7] == 'E') &&
-                     (argv[argc][8] == '=')) {
-                m_vRegistry->setModules(argv[argc] + 9);
-            }
-#endif // (!defined(_ELPP_DISABLE_VMODULES))
-        }
+        m_commandLineArgs.setArgs(argc, argv);
+        m_vRegistry->setFromArgs(commandLineArgs());
     }
 
     inline void setApplicationArguments(int argc, const char** argv) {
@@ -3530,9 +3623,9 @@ public:
 class Writer : private base::NoCopy {
 public:
     Writer(const std::string& loggerId, const Level& level, const char* file, unsigned long int line,
-               const char* func, VRegistry::VLevel verboseLevel = 0) :
+               const char* func, VRegistry::VLevel verboseLevel = 0, bool skipDispatch = false) :
                    m_level(level), m_file(file), m_line(line), m_func(func), m_verboseLevel(verboseLevel),
-                   m_proceed(true), m_containerLogSeperator("") {
+                   m_proceed(true), m_skipDispatch(skipDispatch), m_containerLogSeperator("") {
         m_logger = elStorage->registeredLoggers()->get(loggerId, false);
         if (m_logger == nullptr) {
             if (!elStorage->registeredLoggers()->has(std::string(base::consts::kDefaultLoggerId))) {
@@ -3551,12 +3644,12 @@ public:
     }
 
     virtual ~Writer(void) {
-        if (m_proceed) {
+        if (m_proceed && !m_skipDispatch) {
             base::LogDispatcher(m_proceed, base::LogMessage(m_level, m_file, m_line, m_func, m_verboseLevel,
                           m_logger, m_logger->stream().str())).dispatch(false);
-            m_logger->stream().str("");
         }
         if (m_logger != nullptr) {
+            m_logger->stream().str("");
             m_logger->unlock();
         }
 #if !defined(_ELPP_PREVENT_FATAL_ABORT)
@@ -3943,7 +4036,9 @@ private:
     VRegistry::VLevel m_verboseLevel;
     Logger* m_logger;
     bool m_proceed;
+    bool m_skipDispatch;
     const char* m_containerLogSeperator;
+    friend class el::Helpers;
 
     template<class Iterator>
     inline Writer& writeIterator(Iterator begin_, Iterator end_, std::size_t size_) {
@@ -4303,6 +4398,18 @@ public:
     static void installPreRollOutHandler(const base::PreRollOutHandler& handler) {
         base::elStorage->setPreRollOutHandler(handler);
     }
+    /// @brief Converts template to std::string - useful for loggable classes to log containers within log(std::ostream&) const
+    template <typename T>
+    static inline std::string convertTemplateToStdString(const T& templ) {
+        base::elStorage->registeredLoggers()->get(el::base::consts::kInternalHelperLoggerId, true);
+        el::base::Writer w(el::base::consts::kInternalHelperLoggerId, el::Level::Unknown, "", 0, "", 0, true);
+        w << templ;
+        return w.m_logger->stream().str();
+    }
+    /// @brief Returns command line arguments (pointer) provided to easylogging++
+    static inline const el::base::utils::CommandLineArgs* commandLineArgs(void) {
+        return base::elStorage->commandLineArgs();
+    }
 };
 /// @brief Static helpers to deal with loggers and their configurations
 class Loggers : private base::StaticClass {
@@ -4403,6 +4510,22 @@ public:
             configure();
         }
     }
+    /// @brief Configures loggers using command line arg. Ensure you have already set command line args, see Helpers::setArgs(..)
+    /// @return False if invalid argument or argument with no value provided, true if attempted to configure logger. If true is returned
+    ///         that does not mean it has been configured successfully, it only means that it has attempeted to configure logger using configuration
+    ///         file provided in argument
+    static inline bool configureFromArg(const char* argKey) {
+#if defined(_ELPP_DISABLE_CONFIGURATION_FROM_PROGRAM_ARGS)
+        _ELPP_UNUSED(argKey);
+#else
+        if (!Helpers::commandLineArgs()->hasParamWithValue(argKey)) {
+            ELPP_INTERNAL_ERROR("Unable to configure from argKey [" << argKey << "]. Argument value not found in program arguments: " << *Helpers::commandLineArgs(), false);
+            return false;
+        }
+        configureFromGlobal(Helpers::commandLineArgs()->getParamValue(argKey));
+#endif // defined(_ELPP_DISABLE_CONFIGURATION_FROM_PROGRAM_ARGS)
+        return true;
+    }
 };
 class VersionInfo : private base::StaticClass {
 public:
@@ -4420,10 +4543,10 @@ public:
     }
 
     /// @brief Current version number
-    static inline const std::string version(void) { return std::string("9.19"); }
+    static inline const std::string version(void) { return std::string("9.20"); }
 
     /// @brief Release date of current version
-    static inline const std::string releaseDate(void) { return std::string("20-09-2013 1816hrs"); }
+    static inline const std::string releaseDate(void) { return std::string("27-09-2013 1800hrs"); }
 
     /// @brief Original author and maintainer
     static inline const std::string author(void) { return std::string("Majid Khan"); }
