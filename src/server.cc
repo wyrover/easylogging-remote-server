@@ -4,6 +4,7 @@
 
 #include "easylogging++.h"
 #include "credentials.h"
+#include "json_packet.h"
 #include "request_type.h"
 #include "request.h"
 #include "write_logs_request.h"
@@ -42,8 +43,8 @@ void Server::packetReady(void)
     QTcpSocket* connection = static_cast<QTcpSocket*>(sender());
     LOG(INFO) << "Reading packet from connection [" << connection << "]";
     QString packet = QString(connection->readAll());
-    if (packet.startsWith("e")) exit(0);
-    Request* request = buildRequestFromPacket(packet.toStdString());
+    JsonPacket json(packet.toStdString());
+    Request* request = buildRequestFromPacket(&json);
     if (request == nullptr) {
         connection->disconnectFromHost();
         return;
@@ -64,14 +65,14 @@ void Server::packetReady(void)
     connection->disconnectFromHost();
 }
 
-Request* Server::buildRequestFromPacket(const std::string& packet) const
+Request* Server::buildRequestFromPacket(JsonPacket* jsonPacket) const
 {
     Request* request = nullptr;
 
     // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
-    RequestType type = RequestTypeHelper::findRequestTypeFromJson(packet);
+    RequestType type = RequestTypeHelper::findRequestTypeFromJson(jsonPacket);
     if (type == RequestType::WriteLogs) {
-        request = new WriteLogsRequest(packet);
+        request = new WriteLogsRequest(jsonPacket);
     } else if (type == RequestType::NewLogger) {
 
     } else if (type == RequestType::ConfigurationUpdate) {
@@ -79,7 +80,7 @@ Request* Server::buildRequestFromPacket(const std::string& packet) const
     } else if (type == RequestType::RunCommand) {
 
     } else {
-        // Ignore, error is logged from findRequestTypeFromJson(..)
+        LOG(ERROR) << "Invalid request type received";
     }
     return request;
 }

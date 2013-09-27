@@ -5,26 +5,27 @@
 #include "request_type.h"
 
 class Credentials;
+class JsonPacket;
 
 class Request
 {
 public:
-    explicit Request(const std::string& json);
+    explicit Request(JsonPacket* json);
     virtual ~Request(void);
 
-    virtual bool parseFromJson(const std::string& json);
+    virtual bool parseFromJson(JsonPacket* json);
     virtual RequestType type(void) const = 0;
     virtual bool process(void) = 0;
 
-    bool valid(void) const;
-    void setValid(bool isValid);
-    const std::string& lastError(void) const;
-    void setLastError(const std::string& error);
-    const std::string& jsonRequest(void) const;
+    JsonPacket* jsonPacket(void) const { return m_jsonPacket; }
+    bool valid(void) const { return m_valid; }
+    void setValid(bool isValid) { m_valid = isValid; }
+    const std::string& lastError(void) const { return m_lastError; }
+    void setLastError(const std::string& error) { m_lastError = error; }
     bool userHasPermissions(Credentials* credentials) const;
-    const std::string& user(void) const;
+    const std::string& user(void) const { return m_user; }
 private:
-    std::string m_jsonRequest;
+    JsonPacket* m_jsonPacket;
     std::string m_lastError;
     bool m_valid;
     std::string m_user;

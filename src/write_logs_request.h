@@ -7,10 +7,10 @@
 class WriteLogsRequest : public Request
 {
 public:
-    explicit WriteLogsRequest(const std::string& jsonRequest);
+    explicit WriteLogsRequest(JsonPacket* json);
     virtual ~WriteLogsRequest(void);
 
-    virtual bool parseFromJson(const std::string& json);
+    virtual bool parseFromJson(JsonPacket* json);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 

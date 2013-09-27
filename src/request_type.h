@@ -14,13 +14,15 @@ enum class RequestType : unsigned short {
     Unknown = 1010
 };
 
+class JsonPacket;
+
 class RequestTypeHelper {
 public:
     static const char* convertToString(const RequestType& requestType);
     static RequestType convertFromString(const char* requestTypeStr);
     static unsigned short convertToShort(const RequestType& requestType);
     static RequestType convertFromShort(unsigned short requestTypeShort);
-    static RequestType findRequestTypeFromJson(const std::string& json);
+    static RequestType findRequestTypeFromJson(JsonPacket* json);
 private:
     RequestTypeHelper(void);
     RequestTypeHelper(const RequestTypeHelper&);

@@ -1,58 +1,27 @@
 #include "write_logs_request.h"
-#include <jsoncpp/json.h>
 #include "easylogging++.h"
+#include "json_packet.h"
 #include "request_type.h"
 
-WriteLogsRequest::WriteLogsRequest(const std::string& json) :
+WriteLogsRequest::WriteLogsRequest(JsonPacket* json) :
     Request(json)
 {
-    parseFromJson(jsonRequest());
+    parseFromJson(jsonPacket());
 }
 
 WriteLogsRequest::~WriteLogsRequest(void)
 {
 }
 
-bool WriteLogsRequest::parseFromJson(const std::string& json)
+bool WriteLogsRequest::parseFromJson(JsonPacket* jsonPacket)
 {
-    Json::Value root;
-    Json::Reader reader;
-    try {
-        if (!reader.parse(json, root)) {
-            setValid(false);
-            setLastError("Invalid json request: " + json);
-            return false;
-        }
-    } catch (...) {
-        return false;
-    }
-    // Logger
-    Json::Value jsonLogger = root.get("logger", "remote");
-    m_logger = jsonLogger.asString();
-    // Level
-    Json::Value jsonLevel = root.get("level", "0");
-    if (jsonLevel.isInt()) {
-        m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonLevel.asUInt()));
-    }
-    // Log
-    Json::Value jsonLog = root.get("log", "");
-    m_logMessage = jsonLog.asString();
-    // Verbose Level
-    if (m_level == el::Level::Verbose) {
-        Json::Value jsonVLevel = root.get("vlevel", "0");
-        m_vLevel = jsonVLevel.asInt();
-    }
-    // Func
-    Json::Value jsonFunc = root.get("func", "");
-    m_func = jsonFunc.asString();
-    // File
-    Json::Value jsonFile = root.get("file", "");
-    m_file = jsonFile.asString();
-    // Line
-    Json::Value jsonLine = root.get("line", "0");
-    if (jsonLine.isUInt()) {
-        m_line = static_cast<unsigned int>(jsonLine.asUInt());
-    }
+    m_logger = jsonPacket->getString("logger", "remote");
+    m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket->getInt("level", "0")));
+    m_logMessage = jsonPacket->getString("log", "");
+    m_vLevel = jsonPacket->getInt("vlevel", "0");
+    m_func = jsonPacket->getString("func", "");
+    m_file = jsonPacket->getString("file", "");
+    m_line = jsonPacket->getInt("line", "0");
     setValid(true);
     return true;
 }

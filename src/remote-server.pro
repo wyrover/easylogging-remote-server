@@ -32,7 +32,8 @@ SOURCES += main.cc \
     request_type.cc \
     write_logs_request.cc \
     server.cc \
-    request.cc
+    request.cc \
+    json_packet.cc
 
 HEADERS  += \
     easylogging++.h \
@@ -40,7 +41,8 @@ HEADERS  += \
     request_type.h \
     request.h \
     write_logs_request.h \
-    server.h
+    server.h \
+    json_packet.h
 
 INCLUDEPATH += third_party
 LIBS += -L../src/third_party -ljsoncpp

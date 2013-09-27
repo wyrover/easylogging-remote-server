@@ -5,6 +5,7 @@
 
 class Request;
 class Credentials;
+class JsonPacket;
 
 class Server : public QTcpServer {
     Q_OBJECT
@@ -20,7 +21,7 @@ public:
 private:
     int m_port;
     Credentials* m_credentials;
-    Request* buildRequestFromPacket(const std::string& packet) const;
+    Request* buildRequestFromPacket(JsonPacket* json) const;
     void processRequest(Request* request);
 private slots:
     void onReceived(void);
