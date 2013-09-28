@@ -37,10 +37,8 @@ bool ConfigurationUpdateRequest::process(void)
         return false;
     }
     el::Configurations conf;
-    // Following line can be removed after issue #116 on easylogging++ is fixed
-    conf.setFromBase(logger->configurations());
     conf.parseFromText(m_configurationData);
-    VLOG(3) << "Reconfiguring logger [" << m_logger << "] with configurations [" << conf << "]";
+    VLOG(3) << "Reconfiguring logger [" << m_logger << "] with configurations [\n" << conf << "]";
     logger->configure(conf);
     return true;
 }
