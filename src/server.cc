@@ -18,7 +18,6 @@ Server::Server(Credentials *credentials, QObject *parent) :
 Server::~Server(void)
 {
     LOG(INFO) << "Stopping server on port [" << m_port << "]";
-    close();
 }
 
 void Server::start(int port)

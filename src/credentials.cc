@@ -86,7 +86,7 @@ std::string Credentials::getPermissions(const std::string& username) const
 
 void Credentials::parseUsers(const char* usersStr)
 {
-    VLOG(4) << "Parsing users from string: " << usersStr;
+    VLOG(3) << "Parsing users from string: " << usersStr;
     std::stringstream username;
     std::stringstream password;
     std::stringstream permissions;
@@ -116,10 +116,10 @@ void Credentials::parseUsers(const char* usersStr)
             // Store and continue
             if (permissions.str().empty()) permissions << "0";
             if (m_users.find(username.str()) == m_users.end()) {
-                VLOG(3) << "Creating permissions for [" << username.str() << "] = [" << permissions.str() << "]";
+                VLOG(2) << "Creating permissions for [" << username.str() << "] = [" << permissions.str() << "]";
                 m_users.insert(std::make_pair(username.str(), UsersHashMapValue(password.str(), atoi(permissions.str().c_str()))));
             } else {
-                VLOG(3) << "Skipping [" << username.str() << "] as it is already registered.";
+                VLOG(2) << "Skipping [" << username.str() << "] as it is already registered.";
             }
             username.str("");
             password.str("");
