@@ -7,8 +7,12 @@ class JsonPacket
 {
 public:
     JsonPacket(const std::string& jsonRequest);
+
     bool valid(void) const { return m_valid; }
+    void setValid(bool valid) { m_valid = valid; }
+
     const std::string& lastError(void) const { return m_lastError; }
+    void setLastError(const std::string& lastError) { m_lastError = lastError; }
 
     int getInt(const std::string& key, const Json::Value& defaultValue) const;
     std::string getString(const std::string& key, const Json::Value& defaultValue) const;
