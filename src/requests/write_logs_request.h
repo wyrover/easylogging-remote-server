@@ -7,10 +7,10 @@
 class WriteLogsRequest : public Request
 {
 public:
-    explicit WriteLogsRequest(JsonPacket* jsonPacket);
+    explicit WriteLogsRequest(JsonPacket* jsonPacket, Credentials* credentials);
     virtual ~WriteLogsRequest(void);
 
-    virtual bool buildFromJsonPacket(JsonPacket* jsonPacket);
+    virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 

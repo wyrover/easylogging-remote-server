@@ -3,8 +3,8 @@
 #include "requests/request_type.h"
 #include "json_packet.h"
 
-WriteLogsRequest::WriteLogsRequest(JsonPacket* json) :
-    Request(json)
+WriteLogsRequest::WriteLogsRequest(JsonPacket* json, Credentials* credentials) :
+    Request(json, credentials)
 {
     buildFromJsonPacket(jsonPacket());
 }
@@ -13,7 +13,7 @@ WriteLogsRequest::~WriteLogsRequest(void)
 {
 }
 
-bool WriteLogsRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
+void WriteLogsRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
 {
     m_logger = jsonPacket->getString("logger", "remote");
     m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket->getInt("level", "0")));
@@ -22,8 +22,10 @@ bool WriteLogsRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
     m_func = jsonPacket->getString("func", "");
     m_file = jsonPacket->getString("file", "");
     m_line = jsonPacket->getInt("line", "0");
-    setValid(true);
-    return true;
+    if (valid() && m_level == el::Level::Unknown) {
+        setLastError("Invalid severity level for log");
+        setValid(false);
+    }
 }
 
 RequestType WriteLogsRequest::type(void) const
@@ -33,7 +35,9 @@ RequestType WriteLogsRequest::type(void) const
 
 bool WriteLogsRequest::process(void)
 {
-    VLOG(3) << "Processing request [" << *this << "]";
+    if (!Request::process()) {
+        return false;
+    }
     if (m_level == el::Level::Verbose && !VLOG_IS_ON(m_vLevel)) {
         VLOG(1) << "Verbose log level [" << m_vLevel << "] is not enabled, ignoring...";
         return false;

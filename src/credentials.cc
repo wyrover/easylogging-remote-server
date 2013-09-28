@@ -21,11 +21,13 @@ Credentials::Credentials(void)
 #   else
     // If we have server passkey, our credentials are only valid when the passkey matches
     m_valid = SERVER_PASSKEY == m_passKey;
+    m_requireCredentials = true;
     CHECK(m_valid) << "Server pass key not verified successfully!";
 #   endif // SERVER_PASSKEY
 #else
     // Always valid
     m_valid = true;
+    m_requireCredentials = false;
 #endif // SERVER_REQUIRES_PERMISSION
 }
 

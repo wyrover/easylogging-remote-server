@@ -77,15 +77,16 @@ class el {
     }
     
     private static function newLogger($loggerId, $conf) {
+       $msgArr['user'] = "mkhan";
+       $msgArr['pwd'] = "pass";
        $msgArr['type'] = (int)2;      // 2 = NewLogger
        $msgArr['logger'] = $loggerId;
-       $msgArr['configuration'] = $conf;
        return json_encode($msgArr);
     }
 }
 
   el::write("Flying high...", el::Info);
   el::registerLogger("r", "");
-  el::write("New Logger", el::Info, "r");
+  el::write("Log from new logger", el::Info, "r");
 ?>
 

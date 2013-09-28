@@ -7,9 +7,9 @@
 class NewLoggerRequest : public Request
 {
 public:
-    NewLoggerRequest(JsonPacket *json);
+    NewLoggerRequest(JsonPacket* json, Credentials* credentials);
     virtual ~NewLoggerRequest(void);
-    virtual bool buildFromJsonPacket(JsonPacket* jsonPacket);
+    virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 private:

@@ -4,8 +4,8 @@
 #include "credentials.h"
 #include "json_packet.h"
 
-Request::Request(JsonPacket* json) :
-    m_jsonPacket(json)
+Request::Request(JsonPacket* json, Credentials* credentials) :
+    m_jsonPacket(json), m_credentials(credentials)
 {
     setLastError("");
     setValid(true);
@@ -16,17 +16,31 @@ Request::~Request(void)
 {
 }
 
-bool Request::buildFromJsonPacket(JsonPacket* json)
+void Request::buildFromJsonPacket(JsonPacket* json)
 {
     m_user = json->getString("user", "");
     m_password = json->getString("pwd", "");
     LOG_IF(!m_user.empty(), INFO) << "Request received by [" << m_user << "]";
-    return true;
+    if (m_credentials->requireCredentials() && (m_user.empty() || m_password.empty())) {
+        setLastError("Server requires credentials to process the request. "
+                     "Please verify username and password is provided in json request.");
+        setValid(false);
+    }
 }
 
 bool Request::userHasPermissions(Credentials* credentials) const
 {
     return credentials->check(m_user, m_password, PermissionsHelper::convertRequestTypeShortToPermissions(RequestTypeHelper::convertToShort(type())));
+}
+
+bool Request::process(void) {
+    if (!valid()) {
+        LOG(WARNING) << "Not processing [" << *this << "], invalid request!";
+        return false;
+    } else {
+        VLOG(3) << "Processing request [" << *this << "]";
+    }
+    return true;
 }
 
 void Request::log(std::ostream& os) const

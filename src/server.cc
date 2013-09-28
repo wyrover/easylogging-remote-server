@@ -22,9 +22,9 @@ Server::~Server(void)
 
 void Server::start(int port)
 {
-    CHECK(listen(QHostAddress::Any, port)) << "Unable to start server on port [" << port << "]." << std::endl <<
-                                              " Please make sure this port is free."
-                                              " You can specify server port by using [--port] argument";
+    CHECK(listen(QHostAddress::Any, port)) << "Unable to start server on port [" << port << "]." << std::endl
+                                             << " Please make sure this port is free."
+                                             << " You can specify server port by using [--port] argument";
     QObject::connect(this, SIGNAL(newConnection()), this, SLOT(onReceived()));
 
     m_port = port;
@@ -77,9 +77,9 @@ Request* Server::buildRequestFromPacket(JsonPacket* jsonPacket) const
     // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
     RequestType type = RequestTypeHelper::findRequestTypeFromJson(jsonPacket);
     if (type == RequestType::WriteLogs) {
-        request = new WriteLogsRequest(jsonPacket);
+        request = new WriteLogsRequest(jsonPacket, m_credentials);
     } else if (type == RequestType::NewLogger) {
-        request = new NewLoggerRequest(jsonPacket);
+        request = new NewLoggerRequest(jsonPacket, m_credentials);
     } else if (type == RequestType::ConfigurationUpdate) {
 
     } else {

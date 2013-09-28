@@ -11,12 +11,13 @@ class JsonPacket;
 class Request : public el::Loggable
 {
 public:
-    explicit Request(JsonPacket* jsonPacket);
+    explicit Request(JsonPacket* jsonPacket, Credentials* credentials);
     virtual ~Request(void);
 
-    virtual bool buildFromJsonPacket(JsonPacket* jsonPacket);
+    virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual RequestType type(void) const = 0;
-    virtual bool process(void) = 0;
+
+    virtual bool process(void);
 
     JsonPacket* jsonPacket(void) const { return m_jsonPacket; }
 
@@ -33,6 +34,7 @@ public:
     virtual void log(std::ostream&) const;
 private:
     JsonPacket* m_jsonPacket;
+    Credentials* m_credentials;
     std::string m_lastError;
     bool m_valid;
     std::string m_user;

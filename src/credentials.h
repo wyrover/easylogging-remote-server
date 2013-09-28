@@ -43,6 +43,7 @@ public:
     inline const UsersHashMap& users(void) { return m_users; }
     inline int passKey(void) { return m_passKey; }
     inline bool valid(void) { return m_valid; }
+    inline bool requireCredentials(void) { return m_requireCredentials; }
     bool check(const std::string& username, const std::string& password, const Permissions& permissions = Permissions::All) const;
     virtual void log(std::ostream&) const;
     std::string getPermissions(const std::string& username) const;
@@ -50,6 +51,7 @@ private:
     UsersHashMap m_users;
     int m_passKey;
     bool m_valid;
+    bool m_requireCredentials;
 
     ///
     /// @brief parseUsers Parses usernames/password and stores into m_users hashmap
