@@ -1,6 +1,5 @@
 
 #include "json_packet.h"
-#include "easylogging++.h"
 
 JsonPacket::JsonPacket(const std::string& jsonRequest)
 {
