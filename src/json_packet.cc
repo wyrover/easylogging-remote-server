@@ -33,6 +33,8 @@ int JsonPacket::getInt(const std::string& key, const Json::Value& defaultValue) 
 
 std::string JsonPacket::getString(const std::string& key, const Json::Value& defaultValue) const
 {
-    Json::Value json = m_root.get(key, defaultValue);
-    return json.asString();
+    if (!m_root.isMember(key)) {
+        return defaultValue.asString();
+    }
+    return m_root.get(key, defaultValue).asString();
 }
