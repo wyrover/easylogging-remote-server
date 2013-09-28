@@ -1,5 +1,6 @@
-#include "request_type.h"
 #include <cstring>
+
+#include "requests/request_type.h"
 #include "easylogging++.h"
 #include "json_packet.h"
 
@@ -12,8 +13,6 @@ const char* RequestTypeHelper::convertToString(const RequestType& requestType)
         return "NEW_LOGGER";
     if (requestType == RequestType::ConfigurationUpdate)
         return "CONFIGURATION_UPDATE";
-    if (requestType == RequestType::RunCommand)
-        return "RUN_COMMAND";
     return "UNKNOWN";
 }
 
@@ -27,9 +26,6 @@ RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
     }
     if ((strcmp(requestTypeStr, "CONFIGURATION_UPDATE") == 0) || (strcmp(requestTypeStr, "configuration_update") == 0)) {
         return RequestType::ConfigurationUpdate;
-    }
-    if ((strcmp(requestTypeStr, "RUN_COMMAND") == 0) || (strcmp(requestTypeStr, "run_command") == 0)) {
-        return RequestType::RunCommand;
     }
     return RequestType::Unknown;
 }

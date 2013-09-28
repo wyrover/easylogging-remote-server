@@ -1,6 +1,8 @@
-#include "credentials.h"
+
 #include <cstring>
 #include <sstream>
+
+#include "credentials.h"
 
 const char* Credentials::kUsersParam = "--users";
 const char* Credentials::kPassKeyParam = "--passkey";
@@ -151,7 +153,5 @@ const char* PermissionsHelper::convertPermissionsToString(const Permissions& per
         return "NEW_LOGGER";
     if (permissions == Permissions::ConfigurationUpdate)
         return "CONFIGURATION_UPDATE";
-    if (permissions == Permissions::RunCommand)
-        return "RUN_COMMAND";
     return "UNKNOWN";
 }

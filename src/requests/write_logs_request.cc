@@ -1,19 +1,19 @@
-#include "write_logs_request.h"
+#include "requests/write_logs_request.h"
 #include "easylogging++.h"
+#include "requests/request_type.h"
 #include "json_packet.h"
-#include "request_type.h"
 
 WriteLogsRequest::WriteLogsRequest(JsonPacket* json) :
     Request(json)
 {
-    parseFromJson(jsonPacket());
+    buildFromJsonPacket(jsonPacket());
 }
 
 WriteLogsRequest::~WriteLogsRequest(void)
 {
 }
 
-bool WriteLogsRequest::parseFromJson(JsonPacket* jsonPacket)
+bool WriteLogsRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
 {
     m_logger = jsonPacket->getString("logger", "remote");
     m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket->getInt("level", "0")));
@@ -33,7 +33,7 @@ RequestType WriteLogsRequest::type(void) const
 
 bool WriteLogsRequest::process(void)
 {
-    VLOG(3) << "Processing request [" << RequestTypeHelper::convertToString(type()) << "]";
+    VLOG(3) << "Processing request [" << *this << "]";
     if (m_level == el::Level::Verbose && !VLOG_IS_ON(m_vLevel)) {
         VLOG(1) << "Verbose log level [" << m_vLevel << "] is not enabled, ignoring...";
         return false;

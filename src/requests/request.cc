@@ -1,7 +1,7 @@
-#include "request.h"
+#include "requests/request.h"
 #include "easylogging++.h"
+#include "requests/request_type.h"
 #include "credentials.h"
-#include "request_type.h"
 #include "json_packet.h"
 
 Request::Request(JsonPacket* json) :
@@ -9,14 +9,14 @@ Request::Request(JsonPacket* json) :
 {
     setLastError("");
     setValid(true);
-    parseFromJson(jsonPacket());
+    buildFromJsonPacket(jsonPacket());
 }
 
 Request::~Request(void)
 {
 }
 
-bool Request::parseFromJson(JsonPacket* json)
+bool Request::buildFromJsonPacket(JsonPacket* json)
 {
     m_user = json->getString("user", "");
     m_password = json->getString("pwd", "");
@@ -27,4 +27,9 @@ bool Request::parseFromJson(JsonPacket* json)
 bool Request::userHasPermissions(Credentials* credentials) const
 {
     return credentials->check(m_user, m_password, PermissionsHelper::convertRequestTypeShortToPermissions(RequestTypeHelper::convertToShort(type())));
+}
+
+void Request::log(std::ostream& os) const
+{
+    os << RequestTypeHelper::convertToString(type());
 }

@@ -1,16 +1,16 @@
 #ifndef WRITELOGSREQUEST_H
 #define WRITELOGSREQUEST_H
 
-#include "request.h"
+#include "requests/request.h"
 #include "easylogging++.h"
 
 class WriteLogsRequest : public Request
 {
 public:
-    explicit WriteLogsRequest(JsonPacket* json);
+    explicit WriteLogsRequest(JsonPacket* jsonPacket);
     virtual ~WriteLogsRequest(void);
 
-    virtual bool parseFromJson(JsonPacket* json);
+    virtual bool buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 

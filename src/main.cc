@@ -3,6 +3,7 @@
 #include "credentials.h"
 #include "server.h"
 
+
 _INITIALIZE_EASYLOGGINGPP
 
 static const char* kGlobalConfigurationsFileParam = "--loggers-conf";

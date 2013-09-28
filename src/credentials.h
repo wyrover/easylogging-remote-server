@@ -4,15 +4,14 @@
 #include <string>
 #include <unordered_map>
 #include "easylogging++.h"
-#include "request_type.h"
+#include "requests/request_type.h"
 
 enum class Permissions : unsigned short {
     None = 0,
     WriteLogs = 1,
     NewLogger = 2,
     ConfigurationUpdate = 4,
-    RunCommand = 8,
-    All = 16,
+    All = 8,
     Unknown = 1010
 };
 

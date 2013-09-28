@@ -1,13 +1,13 @@
-#include "server.h"
-
 #include <QTcpSocket>
-
+#include "server.h"
 #include "easylogging++.h"
 #include "credentials.h"
 #include "json_packet.h"
-#include "request_type.h"
-#include "request.h"
-#include "write_logs_request.h"
+#include "requests/request_type.h"
+
+#include "requests/request.h"
+#include "requests/write_logs_request.h"
+#include "requests/new_logger_request.h"
 
 Server::Server(Credentials *credentials, QObject *parent) :
     QTcpServer(parent), m_port(-1), m_credentials(credentials)
@@ -43,8 +43,13 @@ void Server::packetReady(void)
     QTcpSocket* connection = static_cast<QTcpSocket*>(sender());
     LOG(INFO) << "Reading packet from connection [" << connection << "]";
     QString packet = QString(connection->readAll());
-    JsonPacket json(packet.toStdString());
-    Request* request = buildRequestFromPacket(&json);
+    JsonPacket jsonPacket(packet.toStdString());
+    if (!jsonPacket.valid()) {
+        LOG(ERROR) << jsonPacket.lastError();
+        connection->disconnectFromHost();
+        return;
+    }
+    Request* request = buildRequestFromPacket(&jsonPacket);
     if (request == nullptr) {
         connection->disconnectFromHost();
         return;
@@ -74,10 +79,8 @@ Request* Server::buildRequestFromPacket(JsonPacket* jsonPacket) const
     if (type == RequestType::WriteLogs) {
         request = new WriteLogsRequest(jsonPacket);
     } else if (type == RequestType::NewLogger) {
-
+        request = new NewLoggerRequest(jsonPacket);
     } else if (type == RequestType::ConfigurationUpdate) {
-
-    } else if (type == RequestType::RunCommand) {
 
     } else {
         LOG(ERROR) << "Invalid request type received";

@@ -29,20 +29,22 @@ QMAKE_LINK = $$COMPILER
 
 SOURCES += main.cc \
     credentials.cc \
-    request_type.cc \
-    write_logs_request.cc \
     server.cc \
-    request.cc \
-    json_packet.cc
+    json_packet.cc \
+    requests/request_type.cc \
+    requests/request.cc \
+    requests/write_logs_request.cc \
+    requests/new_logger_request.cc
 
 HEADERS  += \
     easylogging++.h \
     credentials.h \
-    request_type.h \
-    request.h \
-    write_logs_request.h \
     server.h \
-    json_packet.h
+    json_packet.h \
+    requests/request_type.h \
+    requests/request.h \
+    requests/write_logs_request.h \
+    requests/new_logger_request.h
 
 INCLUDEPATH += third_party
 LIBS += -L../src/third_party -ljsoncpp
