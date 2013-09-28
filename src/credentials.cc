@@ -63,7 +63,7 @@ bool Credentials::check(const std::string& username, const std::string& password
 void Credentials::log(std::ostream& os) const
 {
     os << m_users.size() << " Users; ";
-    os << "Pass key: [" << (m_valid ? "" : "not ") << "verified]";
+    os << el::Helpers::convertTemplateToStdString(m_users);
 }
 
 std::string Credentials::getPermissions(const std::string& username) const
@@ -86,7 +86,7 @@ std::string Credentials::getPermissions(const std::string& username) const
 
 void Credentials::parseUsers(const char* usersStr)
 {
-    VLOG(3) << "Parsing users from string: " << usersStr;
+    VLOG(4) << "Parsing users from string: " << usersStr;
     std::stringstream username;
     std::stringstream password;
     std::stringstream permissions;
@@ -138,7 +138,6 @@ void Credentials::parseUsers(const char* usersStr)
             }
         }
     }
-    VLOG(3) << "Users: " << m_users;
 }
 
 Permissions PermissionsHelper::convertRequestTypeShortToPermissions(unsigned short requestTypeShort)
