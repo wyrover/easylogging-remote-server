@@ -8,6 +8,7 @@
 #include "requests/request.h"
 #include "requests/write_logs_request.h"
 #include "requests/new_logger_request.h"
+#include "requests/configuration_update_request.h"
 
 Server::Server(Credentials *credentials, QObject *parent) :
     QTcpServer(parent), m_port(-1), m_credentials(credentials)
@@ -81,7 +82,7 @@ Request* Server::buildRequestFromPacket(JsonPacket* jsonPacket) const
     } else if (type == RequestType::NewLogger) {
         request = new NewLoggerRequest(jsonPacket, m_credentials);
     } else if (type == RequestType::ConfigurationUpdate) {
-
+        request = new ConfigurationUpdateRequest(jsonPacket, m_credentials);
     } else {
         LOG(ERROR) << "Invalid request type received";
     }

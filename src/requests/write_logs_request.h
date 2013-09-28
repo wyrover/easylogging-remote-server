@@ -14,13 +14,33 @@ public:
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 
-    const el::Level& level(void);
-    const std::string& logger(void);
-    const std::string& func(void);
-    const std::string& file(void);
-    unsigned long int line(void) const;
-    int vLevel(void) const;
-    const std::string& logMessage(void);
+    const std::string& logger(void) {
+        return m_logger;
+    }
+
+    const el::Level& level(void) {
+        return m_level;
+    }
+
+    const std::string& func(void) {
+        return m_func;
+    }
+
+    const std::string& file(void) {
+        return m_file;
+    }
+
+    unsigned long int line(void) const {
+        return m_line;
+    }
+
+    int vLevel(void) const {
+        return m_vLevel;
+    }
+
+    const std::string& logMessage(void) {
+        return m_logMessage;
+    }
 private:
     std::string m_logger;
     el::Level m_level;

@@ -12,6 +12,10 @@ public:
     virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
+
+    const std::string& logger(void) {
+        return m_logger;
+    }
 private:
     std::string m_logger;
 };
