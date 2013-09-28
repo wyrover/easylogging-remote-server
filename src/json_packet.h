@@ -1,5 +1,5 @@
-#ifndef JSON_UTILS_H
-#define JSON_UTILS_H
+#ifndef JSON_PACKET_H
+#define JSON_PACKET_H
 
 #include <jsoncpp/json.h>
 
@@ -22,4 +22,4 @@ private:
     std::string m_lastError;
 };
 
-#endif // JSON_UTILS_H
+#endif // JSON_PACKET_H
