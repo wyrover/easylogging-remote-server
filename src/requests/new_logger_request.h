@@ -9,6 +9,8 @@ class NewLoggerRequest : public Request
 public:
     static const JsonPacket::Keys kRequiredKeys;
 
+    static const char* kKeyLogger;
+
     NewLoggerRequest(JsonPacket* json, Credentials* credentials);
     virtual ~NewLoggerRequest(void);
     virtual inline RequestType type(void) const;

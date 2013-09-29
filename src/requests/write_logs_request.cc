@@ -1,11 +1,12 @@
 #include "requests/write_logs_request.h"
 #include "easylogging++.h"
 #include "requests/request_type.h"
+#include "requests/request_factory.h"
 #include "json_packet.h"
 
 const JsonPacket::Keys WriteLogsRequest::kRequiredKeys = JsonPacket::Keys {{
-        "level",
-        "log"
+        Request::kKeyLevel,
+        Request::kKeyLogMessage
     }};
 
 WriteLogsRequest::WriteLogsRequest(JsonPacket* json, Credentials* credentials) :
@@ -22,22 +23,21 @@ void WriteLogsRequest::buildFromJsonPacket(void)
 {
     Request::buildFromJsonPacket();
 
-    m_logger = jsonPacket()->getString("logger", "remote");
-    m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket()->getInt("level", 0)));
-    m_logMessage = jsonPacket()->getString("log", "");
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
 
-    if (jsonPacket()->hasKey("vlevel"))
-        m_vLevel = jsonPacket()->getInt("vlevel", 0);
-    if (jsonPacket()->hasKey("func"))
-        m_func = jsonPacket()->getString("func", "");
-    if (jsonPacket()->hasKey("file"))
-        m_file = jsonPacket()->getString("file", "");
-    if (jsonPacket()->hasKey("line"))
-        m_line = jsonPacket()->getInt("line", 0);
+    int levelInt;
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyLevel, 0, &levelInt);
+    m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(levelInt));
     if (valid() && m_level == el::Level::Unknown) {
         setLastError("Invalid severity level for log");
         setValid(false);
     }
+
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogMessage, "", &m_logMessage, true);
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyVerboseLevel, 0, &m_vLevel, true);
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyFunc, "", &m_func, true);
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyFile, "", &m_file, true);
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyLine, 0, &m_line, true);
 }
 
 RequestType WriteLogsRequest::type(void) const

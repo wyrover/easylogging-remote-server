@@ -31,7 +31,7 @@ public:
         return m_file;
     }
 
-    unsigned long int line(void) const {
+    int line(void) const {
         return m_line;
     }
 
@@ -47,7 +47,7 @@ private:
     el::Level m_level;
     std::string m_func;
     std::string m_file;
-    unsigned long int m_line;
+    int m_line;
     int m_vLevel;
     std::string m_logMessage;
     virtual void buildFromJsonPacket(void);

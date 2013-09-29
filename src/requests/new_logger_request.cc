@@ -1,8 +1,9 @@
 #include "requests/new_logger_request.h"
+#include "requests/request_factory.h"
 #include "json_packet.h"
 
 const JsonPacket::Keys NewLoggerRequest::kRequiredKeys = JsonPacket::Keys {{
-        "logger"
+        Request::kKeyLogger
     }};
 
 NewLoggerRequest::NewLoggerRequest(JsonPacket* json, Credentials* credentials) :
@@ -18,7 +19,9 @@ NewLoggerRequest::~NewLoggerRequest(void)
 void NewLoggerRequest::buildFromJsonPacket(void)
 {
     Request::buildFromJsonPacket();
-    m_logger = jsonPacket()->getString("logger", "remote");
+
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
+
     if (!el::Logger::isValidId(m_logger)) {
         setLastError("Invalid logger ID [" + m_logger + "] to register.");
         setValid(false);

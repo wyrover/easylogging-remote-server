@@ -11,6 +11,19 @@ class Credentials;
 class Request : public el::Loggable
 {
 public:
+
+    static const char* kKeyUser;
+    static const char* kKeyPassword;
+    static const char* kKeyType;
+    static const char* kKeyLogger;
+    static const char* kKeyConfigurationData;
+    static const char* kKeyLogMessage;
+    static const char* kKeyVerboseLevel;
+    static const char* kKeyFunc;
+    static const char* kKeyFile;
+    static const char* kKeyLine;
+    static const char* kKeyLevel;
+
     virtual ~Request(void);
     virtual RequestType type(void) const = 0;
 

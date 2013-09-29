@@ -16,6 +16,7 @@ public:
     void setLastError(const std::string& lastError) { m_lastError = lastError; }
 
     int getInt(const std::string& key, int defaultValue) const;
+    unsigned int getUInt(const std::string& key, unsigned int defaultValue) const;
     std::string getString(const std::string& key, const std::string& defaultValue) const;
 
     bool hasKey(const std::string& key) const;

@@ -3,6 +3,7 @@
 #include "requests/request_type.h"
 #include "easylogging++.h"
 #include "json_packet.h"
+#include "request.h"
 
 const char* RequestTypeHelper::convertToString(const RequestType& requestType)
 {
@@ -42,5 +43,5 @@ RequestType RequestTypeHelper::convertFromShort(unsigned short requestTypeShort)
 
 RequestType RequestTypeHelper::findRequestTypeFromJson(JsonPacket* json)
 {
-    return static_cast<RequestType>(json->getInt("type", 0));
+    return static_cast<RequestType>(json->getInt(Request::kKeyType, 0));
 }

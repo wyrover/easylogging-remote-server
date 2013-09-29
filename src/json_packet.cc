@@ -32,6 +32,18 @@ int JsonPacket::getInt(const std::string& key, int defaultValue) const
     return json.asInt();
 }
 
+unsigned int JsonPacket::getUInt(const std::string &key, unsigned int defaultValue) const
+{
+    if (!hasKey(key)) {
+        return defaultValue;
+    }
+    Json::Value json = m_root.get(key, Json::Value(defaultValue));
+    if (!json.isConvertibleTo(Json::uintValue)) {
+        return defaultValue;
+    }
+    return json.asUInt();
+}
+
 std::string JsonPacket::getString(const std::string& key, const std::string& defaultValue) const
 {
     if (!hasKey(key)) {

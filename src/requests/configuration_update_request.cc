@@ -1,9 +1,11 @@
 #include "requests/configuration_update_request.h"
+#include "requests/request_factory.h"
 #include "json_packet.h"
 
+
 const JsonPacket::Keys ConfigurationUpdateRequest::kRequiredKeys = JsonPacket::Keys {{
-        "logger",
-        "conf_data"
+        Request::kKeyLogger,
+        Request::kKeyConfigurationData
     }};
 
 ConfigurationUpdateRequest::ConfigurationUpdateRequest(JsonPacket* json, Credentials* credentials) :
@@ -19,8 +21,10 @@ ConfigurationUpdateRequest::~ConfigurationUpdateRequest(void)
 void ConfigurationUpdateRequest::buildFromJsonPacket(void)
 {
     Request::buildFromJsonPacket();
-    m_logger = jsonPacket()->getString("logger", "remote");
-    m_configurationData = jsonPacket()->getString("conf_data", "");
+
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyConfigurationData, "remote", &m_configurationData);
+
     if (m_configurationData.empty()) {
         setValid(false);
         setLastError("Configuration data cannot be empty");
