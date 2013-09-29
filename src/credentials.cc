@@ -9,8 +9,8 @@ const char* Credentials::kPassKeyParam = "--passkey";
 
 Credentials::Credentials(void)
 {
-    if (el::Helpers::commandLineArgs()->hasParamWithValue(Credentials::kUsersParam)) {
-        parseUsers(el::Helpers::commandLineArgs()->getParamValue(Credentials::kUsersParam));
+    if (el::Helpers::commandLineArgs()->hasParamWithValue(kUsersParam)) {
+        parseUsers(el::Helpers::commandLineArgs()->getParamValue(kUsersParam));
     }
     if (el::Helpers::commandLineArgs()->hasParamWithValue(Credentials::kPassKeyParam)) {
         m_passKey = atoi(el::Helpers::commandLineArgs()->getParamValue(Credentials::kPassKeyParam));

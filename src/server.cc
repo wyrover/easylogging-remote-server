@@ -10,9 +10,18 @@
 #include "requests/new_logger_request.h"
 #include "requests/configuration_update_request.h"
 
+const char* Server::kPortParam = "--port";
+
 Server::Server(Credentials *credentials, QObject *parent) :
-    QTcpServer(parent), m_port(-1), m_credentials(credentials)
+    QTcpServer(parent), m_credentials(credentials)
 {
+    m_port = el::Helpers::commandLineArgs()->hasParamWithValue(kPortParam)
+            ? atoi(el::Helpers::commandLineArgs()->getParamValue(kPortParam))
+            : kDefaultPort;
+
+    if (m_port == 0) {
+        m_port = kDefaultPort;
+    }
 }
 
 Server::~Server(void)
@@ -20,17 +29,15 @@ Server::~Server(void)
     LOG(INFO) << "Stopping server on port [" << m_port << "]";
 }
 
-void Server::start(int port)
+void Server::start()
 {
-    if (!listen(QHostAddress::Any, port)) {
-        LOG(FATAL) << "Unable to start server on port [" << port << "]." << std::endl
+    if (!listen(QHostAddress::Any, m_port)) {
+        LOG(FATAL) << "Unable to start server on port [" << m_port << "]." << std::endl
                    << "    Please make sure this port is free." << std::endl
-                   << "    You can specify server port by using [--port] argument";
+                   << "    You can specify server port by using [" << kPortParam << "] argument";
         exit(1);
     }
     QObject::connect(this, SIGNAL(newConnection()), this, SLOT(onReceived()));
-
-    m_port = port;
 
     LOG(INFO) << "Starting server {" << std::endl
               << "    Parameters: " << *el::Helpers::commandLineArgs() << std::endl

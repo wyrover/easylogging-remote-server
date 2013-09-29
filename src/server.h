@@ -11,16 +11,19 @@ class Server : public QTcpServer {
     Q_OBJECT
 public:
 
+    static const char* kPortParam;
+    static const int kDefaultPort = 1592;
+
     /// @brief Connection process timeout (in sec)
     /// Time to wait until we are ready to process request from client
     static const int kReadTimeout = 60;
 
     explicit Server(Credentials* credentials, QObject *parent = nullptr);
     virtual ~Server(void);
-    void start(int port);
+    void start();
 private:
-    int m_port;
     Credentials* m_credentials;
+    int m_port;
     Request* buildRequestFromPacket(JsonPacket* json) const;
     void processRequest(Request* request);
 private slots:

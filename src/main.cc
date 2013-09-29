@@ -7,8 +7,6 @@
 _INITIALIZE_EASYLOGGINGPP
 
 static const char* kGlobalConfigurationsFileParam = "--loggers-conf";
-static const char* kPortParam = "--port";
-static const int kDefaultPort = 1592;
 
 int main(int argc, char *argv[])
 {
@@ -26,12 +24,8 @@ int main(int argc, char *argv[])
 
     el::Helpers::addFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
 
-    int port = el::Helpers::commandLineArgs()->hasParamWithValue(kPortParam) ? atoi(el::Helpers::commandLineArgs()->getParamValue(kPortParam)) : kDefaultPort;
-    if (port == 0) {
-        port = kDefaultPort;
-    }
     Server server(&credentials);
-    server.start(port);
+    server.start();
 
     return qapp.exec();
 }
