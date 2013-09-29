@@ -30,8 +30,6 @@ int main(int argc, char *argv[])
     if (port == 0) {
         port = kDefaultPort;
     }
-
-    LOG(INFO) << "Server is starting" << (!el::Helpers::commandLineArgs()->empty() ? " using parameters " : "...") << *el::Helpers::commandLineArgs();
     Server server(&credentials);
     server.start(port);
 

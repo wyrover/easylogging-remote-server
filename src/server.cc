@@ -28,7 +28,12 @@ void Server::start(int port)
     QObject::connect(this, SIGNAL(newConnection()), this, SLOT(onReceived()));
 
     m_port = port;
-    LOG(INFO) << "Server started on port [" << m_port << "]";
+
+    LOG(INFO) << "Starting server {" << std::endl
+              << "    Parameters: " << *el::Helpers::commandLineArgs() << std::endl
+              << "    Port: " << m_port << std::endl;
+              << "    Easylogging++ v" << el::VersionInfo::version() << std::endl
+              << "}";
 }
 
 void Server::onReceived(void)
