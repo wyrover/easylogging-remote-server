@@ -6,9 +6,10 @@
 class ConfigurationUpdateRequest : public Request
 {
 public:
+    static std::vector<std::string> kRequiredKeys;
+
     ConfigurationUpdateRequest(JsonPacket* json, Credentials *credentials);
     virtual ~ConfigurationUpdateRequest(void);
-    virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 
@@ -22,6 +23,7 @@ public:
 private:
     std::string m_logger;
     std::string m_configurationData;
+    virtual void buildFromJsonPacket(void);
 };
 
 #endif // CONFIGURATION_UPDATE_REQUEST_H

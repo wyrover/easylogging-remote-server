@@ -31,7 +31,7 @@ void Server::start(int port)
 
     LOG(INFO) << "Starting server {" << std::endl
               << "    Parameters: " << *el::Helpers::commandLineArgs() << std::endl
-              << "    Port: " << m_port << std::endl;
+              << "    Port: " << m_port << std::endl
               << "    Easylogging++ v" << el::VersionInfo::version() << std::endl
               << "}";
 }

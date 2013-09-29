@@ -9,22 +9,26 @@ Request::Request(JsonPacket* json, Credentials* credentials) :
 {
     setLastError("");
     setValid(true);
-    buildFromJsonPacket(jsonPacket());
 }
 
 Request::~Request(void)
 {
 }
 
-void Request::buildFromJsonPacket(JsonPacket* json)
+void Request::buildFromJsonPacket(void)
 {
-    m_user = json->getString("user", "");
-    m_password = json->getString("pwd", "");
+    m_user = m_jsonPacket->getString("user", "");
+    m_password = m_jsonPacket->getString("pwd", "");
     LOG_IF(!m_user.empty(), INFO) << "Request received by [" << m_user << "]";
     if (m_credentials->requireCredentials() && (m_user.empty() || m_password.empty())) {
         setLastError("Server requires credentials to process the request. "
                      "Please verify username and password is provided in json request.");
         setValid(false);
+    }
+    if (valid() && !m_jsonPacket->hasKeys(requiredKeys())) {
+        setLastError("Request [" + el::Helpers::convertTemplateToStdString(*this) + "] needs atleast following keys: " + el::Helpers::convertTemplateToStdString(*requiredKeys()));
+        setValid(false);
+        return;
     }
 }
 

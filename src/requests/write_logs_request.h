@@ -7,10 +7,11 @@
 class WriteLogsRequest : public Request
 {
 public:
+    static std::vector<std::string> kRequiredKeys;
+
     explicit WriteLogsRequest(JsonPacket* jsonPacket, Credentials* credentials);
     virtual ~WriteLogsRequest(void);
 
-    virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 
@@ -49,6 +50,7 @@ private:
     unsigned long int m_line;
     int m_vLevel;
     std::string m_logMessage;
+    virtual void buildFromJsonPacket(void);
 };
 
 #endif // WRITELOGSREQUEST_H

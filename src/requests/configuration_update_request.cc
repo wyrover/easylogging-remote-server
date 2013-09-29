@@ -1,20 +1,27 @@
 #include "requests/configuration_update_request.h"
 #include "json_packet.h"
 
+std::vector<std::string> ConfigurationUpdateRequest::kRequiredKeys = std::vector<std::string> {{
+        "logger",
+        "conf_data"
+    }};
+
 ConfigurationUpdateRequest::ConfigurationUpdateRequest(JsonPacket* json, Credentials* credentials) :
     Request(json, credentials)
 {
-    buildFromJsonPacket(jsonPacket());
+    setRequiredKeys(&kRequiredKeys);
+    buildFromJsonPacket();
 }
 
 ConfigurationUpdateRequest::~ConfigurationUpdateRequest(void)
 {
 }
 
-void ConfigurationUpdateRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
+void ConfigurationUpdateRequest::buildFromJsonPacket(void)
 {
-    m_logger = jsonPacket->getString("logger", "remote");
-    m_configurationData = jsonPacket->getString("conf_data", "");
+    Request::buildFromJsonPacket();
+    m_logger = jsonPacket()->getString("logger", "remote");
+    m_configurationData = jsonPacket()->getString("conf_data", "");
     if (m_configurationData.empty()) {
         setValid(false);
         setLastError("Configuration data cannot be empty");

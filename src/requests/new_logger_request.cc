@@ -1,19 +1,25 @@
 #include "requests/new_logger_request.h"
 #include "json_packet.h"
 
+std::vector<std::string> NewLoggerRequest::kRequiredKeys = std::vector<std::string> {{
+        "logger"
+    }};
+
 NewLoggerRequest::NewLoggerRequest(JsonPacket* json, Credentials* credentials) :
     Request(json, credentials)
 {
-    buildFromJsonPacket(jsonPacket());
+    setRequiredKeys(&kRequiredKeys);
+    buildFromJsonPacket();
 }
 
 NewLoggerRequest::~NewLoggerRequest(void)
 {
 }
 
-void NewLoggerRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
+void NewLoggerRequest::buildFromJsonPacket(void)
 {
-    m_logger = jsonPacket->getString("logger", "remote");
+    Request::buildFromJsonPacket();
+    m_logger = jsonPacket()->getString("logger", "remote");
     if (!el::Logger::isValidId(m_logger)) {
         setLastError("Invalid logger ID [" + m_logger + "] to register.");
         setValid(false);

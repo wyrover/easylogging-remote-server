@@ -7,9 +7,10 @@
 class NewLoggerRequest : public Request
 {
 public:
+    static std::vector<std::string> kRequiredKeys;
+
     NewLoggerRequest(JsonPacket* json, Credentials* credentials);
     virtual ~NewLoggerRequest(void);
-    virtual void buildFromJsonPacket(JsonPacket* jsonPacket);
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 
@@ -18,6 +19,7 @@ public:
     }
 private:
     std::string m_logger;
+    virtual void buildFromJsonPacket(void);
 };
 
 #endif // NEW_LOGGER_REQUEST_H

@@ -3,25 +3,37 @@
 #include "requests/request_type.h"
 #include "json_packet.h"
 
+std::vector<std::string> WriteLogsRequest::kRequiredKeys = std::vector<std::string> {{
+        "logger",
+        "level",
+        "log"
+    }};
+
 WriteLogsRequest::WriteLogsRequest(JsonPacket* json, Credentials* credentials) :
     Request(json, credentials)
 {
-    buildFromJsonPacket(jsonPacket());
+    setRequiredKeys(&kRequiredKeys);
+    buildFromJsonPacket();
 }
 
 WriteLogsRequest::~WriteLogsRequest(void)
 {
 }
 
-void WriteLogsRequest::buildFromJsonPacket(JsonPacket* jsonPacket)
+void WriteLogsRequest::buildFromJsonPacket(void)
 {
-    m_logger = jsonPacket->getString("logger", "remote");
-    m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket->getInt("level", "0")));
-    m_logMessage = jsonPacket->getString("log", "");
-    m_vLevel = jsonPacket->getInt("vlevel", "0");
-    m_func = jsonPacket->getString("func", "");
-    m_file = jsonPacket->getString("file", "");
-    m_line = jsonPacket->getInt("line", "0");
+    Request::buildFromJsonPacket();
+    m_logger = jsonPacket()->getString("logger", "remote");
+    m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket()->getInt("level", "0")));
+    m_logMessage = jsonPacket()->getString("log", "");
+    if (jsonPacket()->hasKey("vlevel"))
+        m_vLevel = jsonPacket()->getInt("vlevel", "0");
+    if (jsonPacket()->hasKey("func"))
+        m_func = jsonPacket()->getString("func", "");
+    if (jsonPacket()->hasKey("file"))
+        m_file = jsonPacket()->getString("file", "");
+    if (jsonPacket()->hasKey("line"))
+        m_line = jsonPacket()->getInt("line", "0");
     if (valid() && m_level == el::Level::Unknown) {
         setLastError("Invalid severity level for log");
         setValid(false);

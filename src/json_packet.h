@@ -16,6 +16,8 @@ public:
 
     int getInt(const std::string& key, const Json::Value& defaultValue) const;
     std::string getString(const std::string& key, const Json::Value& defaultValue) const;
+    bool hasKey(const std::string& key) const;
+    bool hasKeys(std::vector<std::string>* keys) const;
 private:
     Json::Value m_root;
     bool m_valid;
