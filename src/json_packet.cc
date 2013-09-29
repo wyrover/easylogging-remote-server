@@ -21,7 +21,7 @@ JsonPacket::JsonPacket(const std::string& jsonRequest)
 
 int JsonPacket::getInt(const std::string& key, const Json::Value& defaultValue) const
 {
-    if (!m_root.isMember(key)) {
+    if (!hasKey(key)) {
         return -1;
     }
     Json::Value json = m_root.get(key, defaultValue);
@@ -33,7 +33,7 @@ int JsonPacket::getInt(const std::string& key, const Json::Value& defaultValue) 
 
 std::string JsonPacket::getString(const std::string& key, const Json::Value& defaultValue) const
 {
-    if (!m_root.isMember(key)) {
+    if (!hasKey(key)) {
         return std::string("!invalid");
     }
     return m_root.get(key, defaultValue).asString();
