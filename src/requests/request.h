@@ -4,14 +4,13 @@
 #include <string>
 #include "requests/request_type.h"
 #include "easylogging++.h"
+#include "json_packet.h"
 
 class Credentials;
-class JsonPacket;
 
 class Request : public el::Loggable
 {
 public:
-    typedef std::vector<std::string> Keys;
     virtual ~Request(void);
     virtual RequestType type(void) const = 0;
 
@@ -19,8 +18,8 @@ public:
 
     JsonPacket* jsonPacket(void) const { return m_jsonPacket; }
 
-    const Keys* requiredKeys(void) const { return m_requiredKeys; }
-    void setRequiredKeys(const Keys* keys) { m_requiredKeys = keys; }
+    const JsonPacket::Keys* requiredKeys(void) const { return m_requiredKeys; }
+    void setRequiredKeys(const JsonPacket::Keys* keys) { m_requiredKeys = keys; }
 
     bool valid(void) const { return m_valid; }
     void setValid(bool isValid) { m_valid = isValid; }
@@ -34,12 +33,12 @@ public:
 
     virtual void log(std::ostream&) const;
 protected:
-    Request(JsonPacket* jsonPacket, Credentials* credentials, const Keys* requiredKeys);
+    Request(JsonPacket* jsonPacket, Credentials* credentials, const JsonPacket::Keys* requiredKeys);
     virtual void buildFromJsonPacket(void);
 private:
     JsonPacket* m_jsonPacket;
     Credentials* m_credentials;
-    const Keys* m_requiredKeys;
+    const JsonPacket::Keys* m_requiredKeys;
     std::string m_lastError;
     bool m_valid;
     std::string m_user;

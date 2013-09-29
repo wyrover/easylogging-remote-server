@@ -6,7 +6,7 @@
 class ConfigurationUpdateRequest : public Request
 {
 public:
-    static const Keys kRequiredKeys;
+    static const JsonPacket::Keys kRequiredKeys;
 
     ConfigurationUpdateRequest(JsonPacket* json, Credentials *credentials);
     virtual ~ConfigurationUpdateRequest(void);

@@ -2,9 +2,8 @@
 #include "easylogging++.h"
 #include "requests/request_type.h"
 #include "credentials.h"
-#include "json_packet.h"
 
-Request::Request(JsonPacket* json, Credentials* credentials, const Keys *requiredKeys) :
+Request::Request(JsonPacket* json, Credentials* credentials, const JsonPacket::Keys* requiredKeys) :
     m_jsonPacket(json), m_credentials(credentials)
 {
     setRequiredKeys(requiredKeys);

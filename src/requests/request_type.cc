@@ -42,5 +42,5 @@ RequestType RequestTypeHelper::convertFromShort(unsigned short requestTypeShort)
 
 RequestType RequestTypeHelper::findRequestTypeFromJson(JsonPacket* json)
 {
-    return static_cast<RequestType>(json->getInt("type", "0"));
+    return static_cast<RequestType>(json->getInt("type", 0));
 }

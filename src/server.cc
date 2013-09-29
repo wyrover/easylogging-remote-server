@@ -22,9 +22,12 @@ Server::~Server(void)
 
 void Server::start(int port)
 {
-    CHECK(listen(QHostAddress::Any, port)) << "Unable to start server on port [" << port << "]." << std::endl
-                                           << " Please make sure this port is free."
-                                           << " You can specify server port by using [--port] argument";
+    if (!listen(QHostAddress::Any, port)) {
+        LOG(FATAL) << "Unable to start server on port [" << port << "]." << std::endl
+                   << "    Please make sure this port is free." << std::endl
+                   << "    You can specify server port by using [--port] argument";
+        exit(1);
+    }
     QObject::connect(this, SIGNAL(newConnection()), this, SLOT(onReceived()));
 
     m_port = port;

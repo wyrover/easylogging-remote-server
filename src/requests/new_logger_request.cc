@@ -1,7 +1,7 @@
 #include "requests/new_logger_request.h"
 #include "json_packet.h"
 
-const Request::Keys NewLoggerRequest::kRequiredKeys = Request::Keys {{
+const JsonPacket::Keys NewLoggerRequest::kRequiredKeys = JsonPacket::Keys {{
         "logger"
     }};
 

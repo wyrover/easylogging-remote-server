@@ -1,7 +1,7 @@
 #include "requests/configuration_update_request.h"
 #include "json_packet.h"
 
-const Request::Keys ConfigurationUpdateRequest::kRequiredKeys = Request::Keys {{
+const JsonPacket::Keys ConfigurationUpdateRequest::kRequiredKeys = JsonPacket::Keys {{
         "logger",
         "conf_data"
     }};

@@ -1,42 +1,43 @@
 
 #include "json_packet.h"
 
-JsonPacket::JsonPacket(const std::string& jsonRequest)
+JsonPacket::JsonPacket(std::string&& jsonRequest) :
+    m_jsonRequest(std::move(jsonRequest))
 {
     Json::Reader reader;
     try {
-        if (!reader.parse(jsonRequest, m_root)) {
+        if (!reader.parse(m_jsonRequest, m_root)) {
             setValid(false);
-            setLastError("Invalid json: " + jsonRequest);
+            setLastError("Invalid json: " + m_jsonRequest);
         } else {
             setValid(true);
             setLastError("");
         }
     } catch (...) {
         setValid(false);
-        setLastError("Invalid json: " + jsonRequest);
+        setLastError("Invalid json: " + m_jsonRequest);
     }
 }
 
 
-int JsonPacket::getInt(const std::string& key, const Json::Value& defaultValue) const
+int JsonPacket::getInt(const std::string& key, int defaultValue) const
 {
     if (!hasKey(key)) {
-        return -1;
+        return defaultValue;
     }
-    Json::Value json = m_root.get(key, defaultValue);
+    Json::Value json = m_root.get(key, Json::Value(defaultValue));
     if (!json.isConvertibleTo(Json::intValue)) {
-        return defaultValue.asInt();
+        return defaultValue;
     }
     return json.asInt();
 }
 
-std::string JsonPacket::getString(const std::string& key, const Json::Value& defaultValue) const
+std::string JsonPacket::getString(const std::string& key, const std::string& defaultValue) const
 {
     if (!hasKey(key)) {
-        return std::string("!invalid");
+        return defaultValue;
     }
-    return m_root.get(key, defaultValue).asString();
+    return m_root.get(key, Json::Value(defaultValue)).asString();
 }
 
 bool JsonPacket::hasKey(const std::string& key) const
@@ -44,7 +45,7 @@ bool JsonPacket::hasKey(const std::string& key) const
     return m_root.isMember(key);
 }
 
-bool JsonPacket::hasKeys(const std::vector<std::string>* keys) const
+bool JsonPacket::hasKeys(const JsonPacket::Keys* keys) const
 {
     for (auto&& key : *keys) {
         if (!m_root.isMember(key)) {

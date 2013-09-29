@@ -7,7 +7,7 @@
 class WriteLogsRequest : public Request
 {
 public:
-    static const Keys kRequiredKeys;
+    static const JsonPacket::Keys kRequiredKeys;
 
     explicit WriteLogsRequest(JsonPacket* jsonPacket, Credentials* credentials);
     virtual ~WriteLogsRequest(void);

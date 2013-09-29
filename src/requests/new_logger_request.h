@@ -7,7 +7,7 @@
 class NewLoggerRequest : public Request
 {
 public:
-    static const Keys kRequiredKeys;
+    static const JsonPacket::Keys kRequiredKeys;
 
     NewLoggerRequest(JsonPacket* json, Credentials* credentials);
     virtual ~NewLoggerRequest(void);
