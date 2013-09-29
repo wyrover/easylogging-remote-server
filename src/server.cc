@@ -75,8 +75,16 @@ void Server::packetReady(void)
     if (!request->userHasPermissions(m_credentials)) {
         LOG(ERROR) << "Unsuccessful attempt to [" << RequestTypeHelper::convertToString(request->type()) << "] by user [" <<
                       request->user() << " (" << m_credentials->getPermissions(request->user()) << ")]";
+        connection->write("ERR: Permission denied");
     } else {
-        request->process();
+        if (request->process()) {
+            connection->write("OK");
+        } else {
+            LOG(ERROR) << request->lastError();
+            std::stringstream ss;
+            ss << "ERR: " << request->lastError();
+            connection->write(ss.str().c_str());
+        }
     }
     delete request;
     connection->disconnectFromHost();

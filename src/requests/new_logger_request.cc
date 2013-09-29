@@ -42,7 +42,8 @@ bool NewLoggerRequest::process(void)
         return false;
     }
     if (el::Loggers::getLogger(m_logger, true) == nullptr) {
-        LOG(ERROR) << "Unable to register [" << m_logger << "], unknown internal error.";
+        setLastError("Unable to register [" + m_logger + "], unknown internal error.");
+        setValid(false);
         return false;
     }
     return true;

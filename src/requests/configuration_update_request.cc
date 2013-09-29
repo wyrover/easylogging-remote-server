@@ -45,7 +45,8 @@ bool ConfigurationUpdateRequest::process(void)
     }
     el::Logger* logger = el::Loggers::getLogger(m_logger, false);
     if (logger == nullptr) {
-        LOG(ERROR) << "Logger [" << m_logger << "] not registered.";
+        setLastError("Logger [" + m_logger + "] not registered.");
+        setValid(false);
         return false;
     }
     el::Configurations conf;

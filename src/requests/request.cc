@@ -55,11 +55,11 @@ bool Request::userHasPermissions(Credentials* credentials) const
 }
 
 bool Request::process(void) {
-    if (!valid()) {
+    if (valid()) {
+        LOG(INFO) << "Processing request [" << *this << "]";
+    } else {
         LOG(WARNING) << "Not processing [" << *this << "], invalid request; last error: " << m_lastError;
         return false;
-    } else {
-        LOG(INFO) << "Processing request [" << *this << "]";
     }
     return true;
 }
