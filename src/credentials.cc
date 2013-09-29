@@ -70,16 +70,7 @@ std::string Credentials::getPermissions(const std::string& username) const
 {
     UsersHashMap::const_iterator it = m_users.find(username);
     if (it != m_users.end()) {
-        unsigned short flags = it->second.second;
-        std::stringstream ss;
-        for (unsigned short i = static_cast<unsigned short>(Permissions::All); ; i >>= 1) {
-            if (i & flags) {
-                ss << PermissionsHelper::convertPermissionsToString(static_cast<Permissions>(i)) << ", ";
-            }
-            if (i == 0) break;
-        }
-        std::string perms = ss.str();
-        return perms.erase(perms.size() - 2);
+        return permissionFlagToString(it->second.second);
     }
     return std::string();
 }
@@ -116,8 +107,9 @@ void Credentials::parseUsers(const char* usersStr)
             // Store and continue
             if (permissions.str().empty()) permissions << "0";
             if (m_users.find(username.str()) == m_users.end()) {
-                VLOG(2) << "Creating permissions for [" << username.str() << "] = [" << permissions.str() << "]";
-                m_users.insert(std::make_pair(username.str(), UsersHashMapValue(password.str(), atoi(permissions.str().c_str()))));
+                unsigned short flags = atoi(permissions.str().c_str());
+                VLOG(2) << "Creating permissions for [" << username.str() << "] = [" << permissionFlagToString(flags) << "]";
+                m_users.insert(std::make_pair(username.str(), UsersHashMapValue(password.str(), flags)));
             } else {
                 VLOG(2) << "Skipping [" << username.str() << "] as it is already registered.";
             }
@@ -140,6 +132,19 @@ void Credentials::parseUsers(const char* usersStr)
     }
 }
 
+std::string Credentials::permissionFlagToString(unsigned short flags) const
+{
+    std::stringstream ss;
+    for (unsigned short i = static_cast<unsigned short>(Permissions::All); ; i >>= 1) {
+        if (i & flags) {
+            ss << PermissionsHelper::convertPermissionsToString(static_cast<Permissions>(i)) << ", ";
+        }
+        if (i == 0) break;
+    }
+    std::string perms = ss.str();
+    return perms.erase(perms.size() - 2);
+}
+
 Permissions PermissionsHelper::convertRequestTypeShortToPermissions(unsigned short requestTypeShort)
 {
     return (static_cast<Permissions>(RequestTypeHelper::convertFromShort(requestTypeShort)));
@@ -154,5 +159,7 @@ const char* PermissionsHelper::convertPermissionsToString(const Permissions& per
         return "NEW_LOGGER";
     if (permissions == Permissions::ConfigurationUpdate)
         return "CONFIGURATION_UPDATE";
+    if (permissions == Permissions::FlagsUpdate)
+        return "FLAGS_UPDATE";
     return "UNKNOWN";
 }

@@ -1,7 +1,6 @@
 #ifndef NEW_LOGGER_REQUEST_H
 #define NEW_LOGGER_REQUEST_H
 
-#include <string>
 #include "requests/request.h"
 
 class NewLoggerRequest : public Request
@@ -21,7 +20,7 @@ public:
     }
 private:
     std::string m_logger;
-    virtual void buildFromJsonPacket(void);
+    virtual bool buildFromJsonPacket(void);
 };
 
 #endif // NEW_LOGGER_REQUEST_H

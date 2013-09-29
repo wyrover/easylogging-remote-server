@@ -16,16 +16,19 @@ NewLoggerRequest::~NewLoggerRequest(void)
 {
 }
 
-void NewLoggerRequest::buildFromJsonPacket(void)
+bool NewLoggerRequest::buildFromJsonPacket(void)
 {
-    Request::buildFromJsonPacket();
-
+    if (!Request::buildFromJsonPacket()) {
+        return false;
+    }
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
 
     if (!el::Logger::isValidId(m_logger)) {
         setLastError("Invalid logger ID [" + m_logger + "] to register.");
         setValid(false);
+        return false;
     }
+    return valid();
 }
 
 RequestType NewLoggerRequest::type(void) const

@@ -19,10 +19,11 @@ WriteLogsRequest::~WriteLogsRequest(void)
 {
 }
 
-void WriteLogsRequest::buildFromJsonPacket(void)
+bool WriteLogsRequest::buildFromJsonPacket(void)
 {
-    Request::buildFromJsonPacket();
-
+    if (!Request::buildFromJsonPacket()) {
+        return false;
+    }
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
 
     int levelInt;
@@ -31,6 +32,7 @@ void WriteLogsRequest::buildFromJsonPacket(void)
     if (valid() && m_level == el::Level::Unknown) {
         setLastError("Invalid severity level for log");
         setValid(false);
+        return false;
     }
 
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogMessage, "", &m_logMessage, true);
@@ -38,6 +40,7 @@ void WriteLogsRequest::buildFromJsonPacket(void)
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyFunc, "", &m_func, true);
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyFile, "", &m_file, true);
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLine, 0, &m_line, true);
+    return valid();
 }
 
 RequestType WriteLogsRequest::type(void) const

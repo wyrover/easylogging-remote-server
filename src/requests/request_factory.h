@@ -2,7 +2,6 @@
 #define REQUEST_FACTORY_H
 
 #include <string>
-#include <functional>
 
 class Request;
 class JsonPacket;

@@ -35,10 +35,11 @@ SOURCES += main.cc \
     json_packet.cc \
     requests/request_type.cc \
     requests/request.cc \
+    requests/request_factory.cc \
     requests/write_logs_request.cc \
     requests/new_logger_request.cc \
     requests/configuration_update_request.cc \
-    requests/request_factory.cc
+    requests/flags_update_request.cc
 
 HEADERS  += \
     easylogging++.h \
@@ -47,10 +48,11 @@ HEADERS  += \
     json_packet.h \
     requests/request_type.h \
     requests/request.h \
+    requests/request_factory.h \
     requests/write_logs_request.h \
     requests/new_logger_request.h \
     requests/configuration_update_request.h \
-    requests/request_factory.h
+    requests/flags_update_request.h
 
 INCLUDEPATH += third_party
 LIBS += -L../src/third_party -ljsoncpp

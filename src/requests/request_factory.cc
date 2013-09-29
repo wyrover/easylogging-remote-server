@@ -1,8 +1,11 @@
+
+#include <functional>
 #include "requests/request_factory.h"
 #include "requests/request.h"
 #include "requests/write_logs_request.h"
 #include "requests/new_logger_request.h"
 #include "requests/configuration_update_request.h"
+#include "requests/flags_update_request.h"
 
 Request* RequestFactory::buildRequest(JsonPacket* jsonPacket, Credentials* credentials)
 {
@@ -19,6 +22,8 @@ Request* RequestFactory::buildRequest(JsonPacket* jsonPacket, Credentials* crede
             request = new NewLoggerRequest(jsonPacket, credentials);
         } else if (type == RequestType::ConfigurationUpdate) {
             request = new ConfigurationUpdateRequest(jsonPacket, credentials);
+        } else if (type == RequestType::FlagsUpdate) {
+            request = new FlagsUpdateRequest(jsonPacket, credentials);
         } else {
             LOG(ERROR) << "Invalid request type received";
         }

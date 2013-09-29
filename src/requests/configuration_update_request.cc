@@ -2,7 +2,6 @@
 #include "requests/request_factory.h"
 #include "json_packet.h"
 
-
 const JsonPacket::Keys ConfigurationUpdateRequest::kRequiredKeys = JsonPacket::Keys {{
         Request::kKeyLogger,
         Request::kKeyConfigurationData
@@ -18,17 +17,20 @@ ConfigurationUpdateRequest::~ConfigurationUpdateRequest(void)
 {
 }
 
-void ConfigurationUpdateRequest::buildFromJsonPacket(void)
+bool ConfigurationUpdateRequest::buildFromJsonPacket(void)
 {
-    Request::buildFromJsonPacket();
-
+    if (!Request::buildFromJsonPacket()) {
+        return false;
+    }
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyConfigurationData, "remote", &m_configurationData);
 
     if (m_configurationData.empty()) {
         setValid(false);
         setLastError("Configuration data cannot be empty");
+        return false;
     }
+    return valid();
 }
 
 RequestType ConfigurationUpdateRequest::type(void) const

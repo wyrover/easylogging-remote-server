@@ -23,7 +23,7 @@ public:
 private:
     std::string m_logger;
     std::string m_configurationData;
-    virtual void buildFromJsonPacket(void);
+    virtual bool buildFromJsonPacket(void);
 };
 
 #endif // CONFIGURATION_UPDATE_REQUEST_H

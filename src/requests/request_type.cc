@@ -14,6 +14,8 @@ const char* RequestTypeHelper::convertToString(const RequestType& requestType)
         return "NEW_LOGGER";
     if (requestType == RequestType::ConfigurationUpdate)
         return "CONFIGURATION_UPDATE";
+    if (requestType == RequestType::FlagsUpdate)
+        return "FLAGS_UPDATE";
     return "UNKNOWN";
 }
 
@@ -27,6 +29,9 @@ RequestType RequestTypeHelper::convertFromString(const char* requestTypeStr)
     }
     if ((strcmp(requestTypeStr, "CONFIGURATION_UPDATE") == 0) || (strcmp(requestTypeStr, "configuration_update") == 0)) {
         return RequestType::ConfigurationUpdate;
+    }
+    if ((strcmp(requestTypeStr, "FLAGS_UPDATE") == 0) || (strcmp(requestTypeStr, "flags_update") == 0)) {
+        return RequestType::FlagsUpdate;
     }
     return RequestType::Unknown;
 }

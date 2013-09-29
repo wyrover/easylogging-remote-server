@@ -23,6 +23,8 @@ public:
     static const char* kKeyFile;
     static const char* kKeyLine;
     static const char* kKeyLevel;
+    static const char* kKeyLoggingFlag;
+    static const char* kKeyLoggingFlagOperation;
 
     virtual ~Request(void);
     virtual RequestType type(void) const = 0;
@@ -47,7 +49,7 @@ public:
     virtual void log(std::ostream&) const;
 protected:
     Request(JsonPacket* jsonPacket, Credentials* credentials, const JsonPacket::Keys* requiredKeys);
-    virtual void buildFromJsonPacket(void);
+    virtual bool buildFromJsonPacket(void);
 private:
     JsonPacket* m_jsonPacket;
     Credentials* m_credentials;

@@ -50,7 +50,7 @@ private:
     int m_line;
     int m_vLevel;
     std::string m_logMessage;
-    virtual void buildFromJsonPacket(void);
+    virtual bool buildFromJsonPacket(void);
 };
 
 #endif // WRITELOGSREQUEST_H

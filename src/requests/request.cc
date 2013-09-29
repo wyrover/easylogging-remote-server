@@ -15,6 +15,8 @@ const char* Request::kKeyFunc = "func";
 const char* Request::kKeyFile = "file";
 const char* Request::kKeyLine = "line";
 const char* Request::kKeyLevel = "level";
+const char* Request::kKeyLoggingFlag = "flag";
+const char* Request::kKeyLoggingFlagOperation = "oper";
 
 Request::Request(JsonPacket* json, Credentials* credentials, const JsonPacket::Keys* requiredKeys) :
     m_jsonPacket(json), m_credentials(credentials)
@@ -28,7 +30,7 @@ Request::~Request(void)
 {
 }
 
-void Request::buildFromJsonPacket(void)
+bool Request::buildFromJsonPacket(void)
 {
     RequestFactory::updateTarget(m_jsonPacket, kKeyUser, "", &m_user, false);
     RequestFactory::updateTarget(m_jsonPacket, kKeyPassword, "", &m_password, false);
@@ -38,12 +40,13 @@ void Request::buildFromJsonPacket(void)
         setLastError("Server requires credentials to process the request. "
                      "Please verify username and password is provided in json request.");
         setValid(false);
-    }
-    if (valid() && !m_jsonPacket->hasKeys(requiredKeys())) {
+        return false;
+    } else if (!m_jsonPacket->hasKeys(requiredKeys())) {
         setLastError("Request [" + el::Helpers::convertTemplateToStdString(*this) + "] needs at least following keys: " + el::Helpers::convertTemplateToStdString(*requiredKeys()));
         setValid(false);
-        return;
+        return false;
     }
+    return valid();
 }
 
 bool Request::userHasPermissions(Credentials* credentials) const

@@ -11,7 +11,8 @@ enum class Permissions : unsigned short {
     WriteLogs = 1,
     NewLogger = 2,
     ConfigurationUpdate = 4,
-    All = 8,
+    FlagsUpdate = 8,
+    All = 16,
     Unknown = 1010
 };
 
@@ -58,6 +59,8 @@ private:
     /// @param usersStr Taken from param kUsersParam, format is something like: [me:mypass=2,john:pass1=1]
     ///
     void parseUsers(const char* usersStr);
+
+    std::string permissionFlagToString(unsigned short flags) const;
 };
 
 #endif // CREDENTIALS_H
