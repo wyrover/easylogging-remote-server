@@ -3,16 +3,15 @@
 #include "requests/request_type.h"
 #include "json_packet.h"
 
-std::vector<std::string> WriteLogsRequest::kRequiredKeys = std::vector<std::string> {{
+const Request::Keys WriteLogsRequest::kRequiredKeys = Request::Keys {{
         "logger",
         "level",
         "log"
     }};
 
 WriteLogsRequest::WriteLogsRequest(JsonPacket* json, Credentials* credentials) :
-    Request(json, credentials)
+    Request(json, credentials, &kRequiredKeys)
 {
-    setRequiredKeys(&kRequiredKeys);
     buildFromJsonPacket();
 }
 
@@ -23,9 +22,11 @@ WriteLogsRequest::~WriteLogsRequest(void)
 void WriteLogsRequest::buildFromJsonPacket(void)
 {
     Request::buildFromJsonPacket();
+
     m_logger = jsonPacket()->getString("logger", "remote");
     m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(jsonPacket()->getInt("level", "0")));
     m_logMessage = jsonPacket()->getString("log", "");
+
     if (jsonPacket()->hasKey("vlevel"))
         m_vLevel = jsonPacket()->getInt("vlevel", "0");
     if (jsonPacket()->hasKey("func"))

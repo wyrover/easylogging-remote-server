@@ -7,7 +7,7 @@
 class NewLoggerRequest : public Request
 {
 public:
-    static std::vector<std::string> kRequiredKeys;
+    static const Keys kRequiredKeys;
 
     NewLoggerRequest(JsonPacket* json, Credentials* credentials);
     virtual ~NewLoggerRequest(void);

@@ -1,14 +1,13 @@
 #include "requests/new_logger_request.h"
 #include "json_packet.h"
 
-std::vector<std::string> NewLoggerRequest::kRequiredKeys = std::vector<std::string> {{
+const Request::Keys NewLoggerRequest::kRequiredKeys = Request::Keys {{
         "logger"
     }};
 
 NewLoggerRequest::NewLoggerRequest(JsonPacket* json, Credentials* credentials) :
-    Request(json, credentials)
+    Request(json, credentials, &kRequiredKeys)
 {
-    setRequiredKeys(&kRequiredKeys);
     buildFromJsonPacket();
 }
 

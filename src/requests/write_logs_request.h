@@ -7,7 +7,7 @@
 class WriteLogsRequest : public Request
 {
 public:
-    static std::vector<std::string> kRequiredKeys;
+    static const Keys kRequiredKeys;
 
     explicit WriteLogsRequest(JsonPacket* jsonPacket, Credentials* credentials);
     virtual ~WriteLogsRequest(void);

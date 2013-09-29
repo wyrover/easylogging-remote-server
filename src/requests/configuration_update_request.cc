@@ -1,15 +1,14 @@
 #include "requests/configuration_update_request.h"
 #include "json_packet.h"
 
-std::vector<std::string> ConfigurationUpdateRequest::kRequiredKeys = std::vector<std::string> {{
+const Request::Keys ConfigurationUpdateRequest::kRequiredKeys = Request::Keys {{
         "logger",
         "conf_data"
     }};
 
 ConfigurationUpdateRequest::ConfigurationUpdateRequest(JsonPacket* json, Credentials* credentials) :
-    Request(json, credentials)
+    Request(json, credentials, &kRequiredKeys)
 {
-    setRequiredKeys(&kRequiredKeys);
     buildFromJsonPacket();
 }
 

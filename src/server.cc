@@ -79,11 +79,11 @@ Request* Server::buildRequestFromPacket(JsonPacket* jsonPacket) const
 {
     Request* request = nullptr;
 
-    // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
     if (!jsonPacket->hasKey("type")) {
         LOG(ERROR) << "Request type not received";
     } else {
         RequestType type = RequestTypeHelper::findRequestTypeFromJson(jsonPacket);
+        // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
         if (type == RequestType::WriteLogs) {
             request = new WriteLogsRequest(jsonPacket, m_credentials);
         } else if (type == RequestType::NewLogger) {

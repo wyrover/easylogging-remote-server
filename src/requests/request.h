@@ -11,6 +11,7 @@ class JsonPacket;
 class Request : public el::Loggable
 {
 public:
+    typedef std::vector<std::string> Keys;
     virtual ~Request(void);
     virtual RequestType type(void) const = 0;
 
@@ -18,8 +19,8 @@ public:
 
     JsonPacket* jsonPacket(void) const { return m_jsonPacket; }
 
-    std::vector<std::string>* requiredKeys(void) const { return m_requiredKeys; }
-    void setRequiredKeys(std::vector<std::string>* keys) { m_requiredKeys = keys; }
+    const Keys* requiredKeys(void) const { return m_requiredKeys; }
+    void setRequiredKeys(const Keys* keys) { m_requiredKeys = keys; }
 
     bool valid(void) const { return m_valid; }
     void setValid(bool isValid) { m_valid = isValid; }
@@ -33,12 +34,12 @@ public:
 
     virtual void log(std::ostream&) const;
 protected:
-    explicit Request(JsonPacket* jsonPacket, Credentials* credentials);
+    Request(JsonPacket* jsonPacket, Credentials* credentials, const Keys* requiredKeys);
     virtual void buildFromJsonPacket(void);
 private:
     JsonPacket* m_jsonPacket;
     Credentials* m_credentials;
-    std::vector<std::string> *m_requiredKeys;
+    const Keys* m_requiredKeys;
     std::string m_lastError;
     bool m_valid;
     std::string m_user;

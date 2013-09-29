@@ -44,7 +44,7 @@ bool JsonPacket::hasKey(const std::string& key) const
     return m_root.isMember(key);
 }
 
-bool JsonPacket::hasKeys(std::vector<std::string>* keys) const
+bool JsonPacket::hasKeys(const std::vector<std::string>* keys) const
 {
     for (auto&& key : *keys) {
         if (!m_root.isMember(key)) {

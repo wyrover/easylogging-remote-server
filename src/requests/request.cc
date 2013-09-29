@@ -4,9 +4,10 @@
 #include "credentials.h"
 #include "json_packet.h"
 
-Request::Request(JsonPacket* json, Credentials* credentials) :
+Request::Request(JsonPacket* json, Credentials* credentials, const Keys *requiredKeys) :
     m_jsonPacket(json), m_credentials(credentials)
 {
+    setRequiredKeys(requiredKeys);
     setLastError("");
     setValid(true);
 }
@@ -26,7 +27,7 @@ void Request::buildFromJsonPacket(void)
         setValid(false);
     }
     if (valid() && !m_jsonPacket->hasKeys(requiredKeys())) {
-        setLastError("Request [" + el::Helpers::convertTemplateToStdString(*this) + "] needs atleast following keys: " + el::Helpers::convertTemplateToStdString(*requiredKeys()));
+        setLastError("Request [" + el::Helpers::convertTemplateToStdString(*this) + "] needs at least following keys: " + el::Helpers::convertTemplateToStdString(*requiredKeys()));
         setValid(false);
         return;
     }

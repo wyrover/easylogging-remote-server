@@ -6,7 +6,7 @@
 class ConfigurationUpdateRequest : public Request
 {
 public:
-    static std::vector<std::string> kRequiredKeys;
+    static const Keys kRequiredKeys;
 
     ConfigurationUpdateRequest(JsonPacket* json, Credentials *credentials);
     virtual ~ConfigurationUpdateRequest(void);
