@@ -12,7 +12,6 @@ class RequestFactory
 public:
     static Request* buildRequest(JsonPacket* jsonPacket, Credentials *credentials);
 
-
     static void updateTarget(JsonPacket* jsonPacket, const std::string& key, const std::string& defaultVal, std::string* target, bool optionalKey = false);
     static void updateTarget(JsonPacket* jsonPacket, const std::string& key, int defaultVal, int* target, bool optionalKey = false);
 private:

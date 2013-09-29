@@ -153,6 +153,8 @@ Permissions PermissionsHelper::convertRequestTypeShortToPermissions(unsigned sho
 const char* PermissionsHelper::convertPermissionsToString(const Permissions& permissions)
 {
     // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
+    if (permissions == Permissions::All)
+        return "ALL";
     if (permissions == Permissions::WriteLogs)
         return "WRITE_LOGS";
     if (permissions == Permissions::NewLogger)

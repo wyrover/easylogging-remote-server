@@ -6,7 +6,7 @@ const JsonPacket::Keys FlagsUpdateRequest::kRequiredKeys = JsonPacket::Keys {{
         Request::kKeyLoggingFlagOperation
     }};
 
-FlagsUpdateRequest::FlagsUpdateRequest(JsonPacket *json, Credentials *credentials) :
+FlagsUpdateRequest::FlagsUpdateRequest(JsonPacket* json, Credentials* credentials) :
     Request(json, credentials, &kRequiredKeys)
 {
     buildFromJsonPacket();

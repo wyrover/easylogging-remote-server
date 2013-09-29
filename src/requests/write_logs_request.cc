@@ -2,7 +2,6 @@
 #include "easylogging++.h"
 #include "requests/request_type.h"
 #include "requests/request_factory.h"
-#include "json_packet.h"
 
 const JsonPacket::Keys WriteLogsRequest::kRequiredKeys = JsonPacket::Keys {{
         Request::kKeyLevel,
