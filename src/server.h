@@ -24,8 +24,6 @@ public:
 private:
     Credentials* m_credentials;
     int m_port;
-    Request* buildRequestFromPacket(JsonPacket* json) const;
-    void processRequest(Request* request);
 private slots:
     void onReceived(void);
     void packetReady(void);

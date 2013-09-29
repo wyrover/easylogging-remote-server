@@ -3,12 +3,9 @@
 #include "easylogging++.h"
 #include "credentials.h"
 #include "json_packet.h"
-#include "requests/request_type.h"
-
 #include "requests/request.h"
-#include "requests/write_logs_request.h"
-#include "requests/new_logger_request.h"
-#include "requests/configuration_update_request.h"
+#include "requests/request_type.h"
+#include "requests/request_factory.h"
 
 const char* Server::kPortParam = "--port";
 
@@ -64,7 +61,7 @@ void Server::packetReady(void)
         connection->disconnectFromHost();
         return;
     }
-    Request* request = buildRequestFromPacket(&jsonPacket);
+    Request* request = RequestFactory::buildRequest(&jsonPacket, m_credentials);
     if (request == nullptr) {
         connection->disconnectFromHost();
         return;
@@ -83,26 +80,4 @@ void Server::packetReady(void)
     }
     delete request;
     connection->disconnectFromHost();
-}
-
-Request* Server::buildRequestFromPacket(JsonPacket* jsonPacket) const
-{
-    Request* request = nullptr;
-
-    if (!jsonPacket->hasKey("type")) {
-        LOG(ERROR) << "Request type not received";
-    } else {
-        RequestType type = RequestTypeHelper::findRequestTypeFromJson(jsonPacket);
-        // Intel C++ does not yet support switch over strongly-typed enums so we use if-statements
-        if (type == RequestType::WriteLogs) {
-            request = new WriteLogsRequest(jsonPacket, m_credentials);
-        } else if (type == RequestType::NewLogger) {
-            request = new NewLoggerRequest(jsonPacket, m_credentials);
-        } else if (type == RequestType::ConfigurationUpdate) {
-            request = new ConfigurationUpdateRequest(jsonPacket, m_credentials);
-        } else {
-            LOG(ERROR) << "Invalid request type received";
-        }
-    }
-    return request;
 }

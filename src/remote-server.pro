@@ -37,7 +37,8 @@ SOURCES += main.cc \
     requests/request.cc \
     requests/write_logs_request.cc \
     requests/new_logger_request.cc \
-    requests/configuration_update_request.cc
+    requests/configuration_update_request.cc \
+    requests/request_factory.cc
 
 HEADERS  += \
     easylogging++.h \
@@ -48,7 +49,8 @@ HEADERS  += \
     requests/request.h \
     requests/write_logs_request.h \
     requests/new_logger_request.h \
-    requests/configuration_update_request.h
+    requests/configuration_update_request.h \
+    requests/request_factory.h
 
 INCLUDEPATH += third_party
 LIBS += -L../src/third_party -ljsoncpp
