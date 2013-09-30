@@ -35,7 +35,7 @@ bool Request::buildFromJsonPacket(void)
     RequestFactory::updateTarget(m_jsonPacket, kKeyUser, "", &m_user, false);
     RequestFactory::updateTarget(m_jsonPacket, kKeyPassword, "", &m_password, false);
 
-    LOG_IF(!m_user.empty(), INFO) << "Request received by [" << m_user << "]";
+    VLOG_IF(!m_user.empty(), 3) << "Request received from [" << m_user << "]";
     if (m_credentials->requireCredentials() && (m_user.empty() || m_password.empty())) {
         setLastError("Server requires credentials to process the request. "
                      "Please verify username and password is provided in json request.");
