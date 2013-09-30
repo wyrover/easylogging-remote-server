@@ -58,19 +58,23 @@ void Server::packetReady(void)
     JsonPacket jsonPacket(packet.toStdString());
     if (!jsonPacket.valid()) {
         LOG(ERROR) << jsonPacket.lastError();
+        connection->write("ERR: Invalid json");
         connection->disconnectFromHost();
         return;
     }
     Request* request = RequestFactory::buildRequest(&jsonPacket, m_credentials);
     if (request == nullptr) {
+        connection->write("ERR: Invalid request type");
         connection->disconnectFromHost();
         return;
     }
     if (!request->valid()) {
-        connection->disconnectFromHost();
+        std::stringstream ss;
+        ss << "ERR: " << request->lastError();
+        connection->write(ss.str().c_str());
         LOG(ERROR) << request->lastError();
+        connection->disconnectFromHost();
         delete request;
-        return;
     }
     if (!request->userHasPermissions(m_credentials)) {
         LOG(ERROR) << "Unsuccessful attempt to [" << RequestTypeHelper::convertToString(request->type()) << "] by user [" <<
@@ -86,6 +90,7 @@ void Server::packetReady(void)
             connection->write(ss.str().c_str());
         }
     }
-    delete request;
+
     connection->disconnectFromHost();
+    delete request;
 }

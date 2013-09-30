@@ -26,24 +26,18 @@ namespace Sample
 
         private void btnWriteLog_Click(object sender, EventArgs e)
         {
-            writeLog();
+            btnWriteLog.Enabled = false;
+            Int32 level = 1 << (cboLevel.SelectedIndex + 1);
+            for (int i = 1; i < 100; ++i)
+            {
+                writeLog(level, txtLogLine.Text + i);   
+            }
+            btnWriteLog.Enabled = true;
         }
 
-        private void writeLog()
+        private void writeLog(int level, String txt)
         {
-            Int32 level = 0;
-            switch (cboLevel.SelectedIndex)
-            {
-                case 0: level = 2; break;
-                case 1: level = 4; break;
-                case 2: level = 8; break;
-                case 3: level = 16; break;
-                case 4: level = 32; break;
-                case 5: level = 64; break;
-                case 6: level = 128; break;
-                default: level = 0; break;
-            }
-            requestSender.send(requestBuilder.buildWriteLogsRequest(level, txtLogLine.Text, Int32.Parse(spnVerboseLevel.Value.ToString())));
+            requestSender.send(requestBuilder.buildWriteLogsRequest(level, txt, Int32.Parse(spnVerboseLevel.Value.ToString())));
         }
 
         private void cboLevel_SelectedIndexChanged(object sender, EventArgs e)
