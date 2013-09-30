@@ -1,4 +1,3 @@
-
 #include "json_packet.h"
 
 JsonPacket::JsonPacket(std::string&& jsonRequest) :
@@ -8,14 +7,14 @@ JsonPacket::JsonPacket(std::string&& jsonRequest) :
     try {
         if (!reader.parse(m_jsonRequest, m_root)) {
             setValid(false);
-            setLastError("Invalid json: " + m_jsonRequest);
+            setLastError("Invalid JSON: " + m_jsonRequest);
         } else {
             setValid(true);
             setLastError("");
         }
     } catch (...) {
         setValid(false);
-        setLastError("Invalid json: " + m_jsonRequest);
+        setLastError("Invalid JSON: " + m_jsonRequest);
     }
 }
 
@@ -65,4 +64,9 @@ bool JsonPacket::hasKeys(const JsonPacket::Keys* keys) const
         }
     }
     return true;
+}
+
+void JsonPacket::log(std::ostream& os) const
+{
+    os << m_jsonRequest;
 }

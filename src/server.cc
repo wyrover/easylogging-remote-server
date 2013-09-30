@@ -53,12 +53,12 @@ void Server::onReceived(void)
 void Server::packetReady(void)
 {
     QTcpSocket* connection = static_cast<QTcpSocket*>(sender());
-    LOG(INFO) << "Reading packet from connection [" << connection << "]";
+    VLOG(3) << "Reading packet from connection [" << connection << "]";
     QString packet = QString(connection->readAll());
     JsonPacket jsonPacket(packet.toStdString());
     if (!jsonPacket.valid()) {
         LOG(ERROR) << jsonPacket.lastError();
-        connection->write("ERR: Invalid json");
+        connection->write("ERR: Invalid JSON");
         connection->disconnectFromHost();
         return;
     }
@@ -68,6 +68,7 @@ void Server::packetReady(void)
         connection->disconnectFromHost();
         return;
     }
+    VLOG(4) << "Received JSON: " << *request->jsonPacket();
     if (!request->valid()) {
         std::stringstream ss;
         ss << "ERR: " << request->lastError();
@@ -77,8 +78,8 @@ void Server::packetReady(void)
         delete request;
     }
     if (!request->userHasPermissions(m_credentials)) {
-        LOG(ERROR) << "Unsuccessful attempt to [" << RequestTypeHelper::convertToString(request->type()) << "] by user [" <<
-                      request->user() << " (" << m_credentials->getPermissions(request->user()) << ")]";
+        LOG(ERROR) << "Unsuccessful attempt to [" << RequestTypeHelper::convertToString(request->type()) << "] by user ["
+                      << request->user() << " (" << m_credentials->getPermissions(request->user()) << ")]";
         connection->write("ERR: Permission denied");
     } else {
         if (request->process()) {

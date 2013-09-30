@@ -2,8 +2,9 @@
 #define JSON_PACKET_H
 
 #include <jsoncpp/json.h>
+#include "easylogging++.h"
 
-class JsonPacket
+class JsonPacket : public el::Loggable
 {
 public:
     typedef std::vector<const char*> Keys;
@@ -21,6 +22,8 @@ public:
 
     bool hasKey(const std::string& key) const;
     bool hasKeys(const Keys* keys) const;
+
+    virtual void log(std::ostream &) const;
 private:
     std::string m_jsonRequest;
     Json::Value m_root;
