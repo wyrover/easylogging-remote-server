@@ -54,7 +54,6 @@ class el {
     const Verbose = 128;
 
     public static function write($msg, $level, $logger = "remote") {
-        echo el::buildMsg($msg, $level, $logger);
         return RemoteConnection::getInstance()->write(el::buildMsg($msg, $level, $logger));
     }
  
@@ -85,8 +84,10 @@ class el {
     }
 }
 
-  el::write("Flying high...", el::Info);
-  el::registerLogger("r", "");
-  el::write("Log from new logger", el::Info, "r");
+  $msg = "Flying High";
+  for ($i = 1; $i <= 10000; ++$i)
+     $msg .= "A quick brown fox jumps over the lazy dog..." . $i;
+
+  el::write($msg, el::Info);
 ?>
 

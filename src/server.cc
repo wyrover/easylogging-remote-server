@@ -48,9 +48,12 @@ void Server::readCompletePacket(QTcpSocket *connection, QString& target) const
 {
     QString packet(connection->readAll());
     // FIXME: This does not work for big data e.g, conf_data etc
-    while (connection->bytesAvailable()) {
-        packet.append(connection->readAll());
+    bool readFailed = false;
+    while (!readFailed && !packet.contains("}\0")) {
+        readFailed = !connection->waitForReadyRead(100);
+        packet += connection->readAll();
     }
+
     target = packet;
 }
 
