@@ -24,6 +24,7 @@ public:
 private:
     Credentials* m_credentials;
     int m_port;
+    void readCompletePacket(QTcpSocket* connection, QString& target) const;
 private slots:
     void onReceived(void);
     void packetReady(void);

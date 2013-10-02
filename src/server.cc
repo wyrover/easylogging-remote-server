@@ -1,4 +1,5 @@
 #include <QTcpSocket>
+#include <QDataStream>
 #include "server.h"
 #include "easylogging++.h"
 #include "credentials.h"
@@ -43,6 +44,16 @@ void Server::start()
               << "}";
 }
 
+void Server::readCompletePacket(QTcpSocket *connection, QString& target) const
+{
+    QString packet(connection->readAll());
+    // FIXME: This does not work for big data e.g, conf_data etc
+    while (connection->bytesAvailable()) {
+        packet.append(connection->readAll());
+    }
+    target = packet;
+}
+
 void Server::onReceived(void)
 {
     QTcpSocket* connection = nextPendingConnection();
@@ -54,7 +65,8 @@ void Server::packetReady(void)
 {
     QTcpSocket* connection = static_cast<QTcpSocket*>(sender());
     VLOG(3) << "Reading packet from connection [" << connection << "]";
-    QString packet = QString(connection->readAll());
+    QString packet;
+    readCompletePacket(connection, packet);
     JsonPacket jsonPacket(packet.toStdString());
     if (!jsonPacket.valid()) {
         LOG(ERROR) << jsonPacket.lastError();
