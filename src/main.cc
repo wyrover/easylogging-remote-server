@@ -11,6 +11,11 @@ int main(int argc, char *argv[])
 {
     QApplication qapp(argc, argv);
     el::Helpers::setArgs(argc, argv);
+    
+    el::Helpers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
+    el::Helpers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
+    el::Helpers::addFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
+    
     if (el::Loggers::configureFromArg(kGlobalConfigurationsFileParam)) {
         LOG(INFO) << "Configuring loggers using configurations from [" << el::Helpers::commandLineArgs()->getParamValue(kGlobalConfigurationsFileParam) << "]";
     } else {
@@ -20,8 +25,6 @@ int main(int argc, char *argv[])
     // Figure out credentials for current instance of server
     Credentials credentials;
     LOG_IF(credentials.users().size() > 0, INFO) << "Credentials [" << credentials << "]";
-
-    el::Helpers::addFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
 
     Server server(&credentials);
     server.start();

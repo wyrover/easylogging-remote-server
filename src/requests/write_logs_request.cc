@@ -6,7 +6,7 @@
 const JsonPacket::Keys WriteLogsRequest::kRequiredKeys = JsonPacket::Keys {{
         Request::kKeyLevel,
         Request::kKeyLogMessage
-    }};
+        }};
 
 WriteLogsRequest::WriteLogsRequest(JsonPacket* json, Credentials* credentials) :
     Request(json, credentials, &kRequiredKeys)
@@ -24,7 +24,7 @@ bool WriteLogsRequest::buildFromJsonPacket(void)
         return false;
     }
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
-
+    
     int levelInt;
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLevel, 0, &levelInt);
     m_level = el::LevelHelper::castFromInt(static_cast<unsigned short>(levelInt));
@@ -33,7 +33,7 @@ bool WriteLogsRequest::buildFromJsonPacket(void)
         setValid(false);
         return false;
     }
-
+    
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogMessage, "", &m_logMessage, true);
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyVerboseLevel, 0, &m_vLevel, true);
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyFunc, "", &m_func, true);
@@ -56,7 +56,8 @@ bool WriteLogsRequest::process(void)
         LOG(WARNING) << "Verbose log level [" << m_vLevel << "] is not enabled, ignoring...";
         return false;
     } else {
-        el::base::Writer(m_logger, m_level, m_file.c_str(), m_line, m_func.c_str(), m_vLevel) << m_logMessage;
+        el::base::Writer(m_logger, m_level, m_file.c_str(), m_line, m_func.c_str(), 
+                el::base::utils::bitwise::Or(1, el::base::DispatchAction::NormalLog), m_vLevel) << m_logMessage;
     }
     return true;
 }

@@ -23,7 +23,7 @@ bool ConfigurationUpdateRequest::buildFromJsonPacket(void)
         return false;
     }
     RequestFactory::updateTarget(jsonPacket(), Request::kKeyLogger, "remote", &m_logger);
-    RequestFactory::updateTarget(jsonPacket(), Request::kKeyConfigurationData, "remote", &m_configurationData);
+    RequestFactory::updateTarget(jsonPacket(), Request::kKeyConfigurationData, "", &m_configurationData);
 
     if (m_configurationData.empty()) {
         setValid(false);
@@ -46,6 +46,11 @@ bool ConfigurationUpdateRequest::process(void)
     el::Logger* logger = el::Loggers::getLogger(m_logger, false);
     if (logger == nullptr) {
         setLastError("Logger [" + m_logger + "] not registered.");
+        setValid(false);
+        return false;
+    }
+    if (m_configurationData.empty()) {
+        setLastError("Configuration data empty.");
         setValid(false);
         return false;
     }

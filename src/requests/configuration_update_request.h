@@ -13,11 +13,11 @@ public:
     virtual inline RequestType type(void) const;
     virtual bool process(void);
 
-    const std::string& logger(void) {
+    const std::string& logger(void) const {
         return m_logger;
     }
 
-    const std::string& configurationData(void) {
+    const std::string& configurationData(void) const {
         return m_configurationData;
     }
 private:
