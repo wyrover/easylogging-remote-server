@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     el::Helpers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
     el::Helpers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
     el::Helpers::addFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
+    el::Helpers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
     
     if (el::Loggers::configureFromArg(kGlobalConfigurationsFileParam)) {
         LOG(INFO) << "Configuring loggers using configurations from [" << el::Helpers::commandLineArgs()->getParamValue(kGlobalConfigurationsFileParam) << "]";
