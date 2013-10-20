@@ -56,8 +56,7 @@ bool WriteLogsRequest::process(void)
         LOG(WARNING) << "Verbose log level [" << m_vLevel << "] is not enabled, ignoring...";
         return false;
     } else {
-        el::base::Writer(m_logger, m_level, m_file.c_str(), m_line, m_func.c_str(), 
-                el::base::utils::bitwise::Or(1, el::base::DispatchAction::NormalLog), m_vLevel) << m_logMessage;
+        el::base::Writer(m_logger, m_level, m_file.c_str(), m_line, m_func.c_str(), el::base::DispatchAction::NormalLog, m_vLevel) << m_logMessage;
     }
     return true;
 }

@@ -20,7 +20,8 @@ public:
 
     explicit Server(Credentials* credentials, QObject *parent = nullptr);
     virtual ~Server(void);
-    void start();
+    void start(void);
+    std::string address(void) const;
 private:
     Credentials* m_credentials;
     int m_port;

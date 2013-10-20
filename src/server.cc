@@ -1,4 +1,5 @@
 #include <QTcpSocket>
+#include <QNetworkInterface>
 #include <QDataStream>
 #include "server.h"
 #include "easylogging++.h"
@@ -27,7 +28,16 @@ Server::~Server(void)
     LOG(INFO) << "Stopping server on port [" << m_port << "]";
 }
 
-void Server::start()
+std::string Server::address(void) const {
+    std::string ipAddresses;
+    foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
+            ipAddresses = address.toString().toStdString() + " ";
+    }
+    return ipAddresses;
+}
+
+void Server::start(void)
 {
     if (!listen(QHostAddress::Any, m_port)) {
         LOG(FATAL) << "Unable to start server on port [" << m_port << "]." << std::endl
@@ -39,6 +49,7 @@ void Server::start()
 
     LOG(INFO) << "Starting server {" << std::endl
               << "    Parameters: " << *el::Helpers::commandLineArgs() << std::endl
+              << "    Address: " << address() << std::endl
               << "    Port: " << m_port << std::endl
               << "    Easylogging++ v" << el::VersionInfo::version() << std::endl
               << "}";
