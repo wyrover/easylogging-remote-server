@@ -53,7 +53,7 @@ HEADERS  += \
     requests/configuration_update_request.h \
     requests/flags_update_request.h
 
-INCLUDEPATH += third_party
+INCLUDEPATH += third_party /usr/include/x86_64-linux-gnu/c++/4.8/
 LIBS += -L../src/third_party -ljsoncpp
 
 OTHER_FILES += \
