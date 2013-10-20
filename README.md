@@ -31,7 +31,7 @@ You can send request to this server in JSON format, this is only acceptable form
 |---------------|---------------------------------------------------------------|
 | user          | Username for server to send request. (For security purposes)  |
 | pwd           | Password for username. (For security purposes)                |
-| type          | Type of request you are sending, this is integral value (see `requests/RequestType.h` for values)      |
+| type          | Type of request you are sending, this is integral value (see `RequestType` enum in [src/requests/request_type.h](https://github.com/easylogging/easylogging-remote-server/blob/master/src/requests/request_type.h) for values)      |
 
 #### Write Logs (type: 1)
 |      Key      |                  Description                                  |
