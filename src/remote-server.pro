@@ -11,16 +11,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = remote-server
 TEMPLATE = app
 
-QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++11
 
 DEFINES += _ELPP_QT_LOGGING \
      _ELPP_STL_LOGGING \
      _ELPP_LOG_UNORDERED_MAP \
-     _ELPP_THREAD_SAFE \
      _ELPP_DEFAULT_LOG_FILE='"\\"logs/server.log\\""' \
      _ELPP_DISABLE_ASSERT \
      SERVER_REQUIRES_PERMISSION \
      SERVER_PASSKEY=123
+     
+## We dont define _ELPP_THREAD_SAFE since we only deal with single thread
 
 COMPILER = g++
 QMAKE_CC = $$COMPILER

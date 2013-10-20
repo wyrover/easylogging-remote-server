@@ -31,7 +31,7 @@ You can send request to this server in JSON format, this is only acceptable form
 |---------------|---------------------------------------------------------------|
 | user          | Username for server to send request. (For security purposes)  |
 | pwd           | Password for username. (For security purposes)                |
-| type          | Type of request you are sending, this is integral value       |
+| type          | Type of request you are sending, this is integral value (see `requests/RequestType.h` for values)      |
 
 #### Write Logs (type: 1)
 |      Key      |                  Description                                  |
