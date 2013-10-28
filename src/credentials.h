@@ -46,7 +46,7 @@ public:
     inline bool valid(void) { return m_valid; }
     inline bool requireCredentials(void) { return m_requireCredentials; }
     bool check(const std::string& username, const std::string& password, const Permissions& permissions = Permissions::All) const;
-    virtual void log(std::ostream&) const;
+    virtual void log(el::base::type::ostream_t&) const;
     std::string getPermissions(const std::string& username) const;
 private:
     UsersHashMap m_users;

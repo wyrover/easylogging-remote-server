@@ -13,7 +13,8 @@ TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++11
 
-DEFINES += _ELPP_QT_LOGGING \
+DEFINES += _ELPP_UNICODE \
+     _ELPP_QT_LOGGING \
      _ELPP_STL_LOGGING \
      _ELPP_LOG_UNORDERED_MAP \
      _ELPP_DEFAULT_LOG_FILE='"\\"logs/server.log\\""' \
@@ -23,7 +24,7 @@ DEFINES += _ELPP_QT_LOGGING \
      
 ## We dont define _ELPP_THREAD_SAFE since we only deal with single thread
 
-COMPILER = g++
+COMPILER = icpc
 QMAKE_CC = $$COMPILER
 QMAKE_CXX = $$COMPILER
 QMAKE_LINK = $$COMPILER

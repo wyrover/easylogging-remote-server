@@ -46,7 +46,7 @@ public:
 
     const std::string& user(void) const { return m_user; }
 
-    virtual void log(std::ostream&) const;
+    virtual void log(el::base::type::ostream_t &) const;
 protected:
     Request(JsonPacket* jsonPacket, Credentials* credentials, const JsonPacket::Keys* requiredKeys);
     virtual bool buildFromJsonPacket(void);

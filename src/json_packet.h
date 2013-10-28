@@ -23,7 +23,7 @@ public:
     bool hasKey(const std::string& key) const;
     bool hasKeys(const Keys* keys) const;
 
-    virtual void log(std::ostream &) const;
+    virtual void log(el::base::type::ostream_t&) const;
 private:
     std::string m_jsonRequest;
     Json::Value m_root;

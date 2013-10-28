@@ -60,10 +60,10 @@ bool Credentials::check(const std::string& username, const std::string& password
 #endif
 }
 
-void Credentials::log(std::ostream& os) const
+void Credentials::log(el::base::type::ostream_t& os) const
 {
     os << m_users.size() << " Users; ";
-    os << el::Helpers::convertTemplateToStdString(m_users);
+    os << el::Helpers::convertTemplateToStdString(m_users).c_str();
 }
 
 std::string Credentials::getPermissions(const std::string& username) const

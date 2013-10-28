@@ -54,7 +54,7 @@ bool JsonPacket::hasKeys(const JsonPacket::Keys* keys) const
     return true;
 }
 
-void JsonPacket::log(std::ostream& os) const
+void JsonPacket::log(el::base::type::ostream_t& os) const
 {
-    os << m_jsonRequest;
+    os << m_jsonRequest.c_str();
 }

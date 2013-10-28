@@ -10,7 +10,7 @@ static const char* kGlobalConfigurationsFileParam = "--loggers-conf";
 int main(int argc, char *argv[])
 {
     QApplication qapp(argc, argv);
-    el::Helpers::setArgs(argc, argv);
+    _START_EASYLOGGINGPP(argc, argv);
     
     el::Helpers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
     el::Helpers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);

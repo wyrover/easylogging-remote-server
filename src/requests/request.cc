@@ -64,7 +64,7 @@ bool Request::process(void) {
     return true;
 }
 
-void Request::log(std::ostream& os) const
+void Request::log(el::base::type::ostream_t& os) const
 {
     os << RequestTypeHelper::convertToString(type());
 }
