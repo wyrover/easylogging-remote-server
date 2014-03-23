@@ -1,9 +1,9 @@
+**This is DISCONTINUED project.**
+
 Easylogging++ Remote Server
 ===========================
 
 Deamon tool that runs in the background and listens to TCP connection to control Easylogging++ back-end and write logs remotely.
-
-**This is currently being developed.**
 
 ---
 
